@@ -1,4 +1,7 @@
 extern crate sdl2;
+
+mod data;
+mod lib;
 mod events;
 
 use sdl2::pixels::Color;
