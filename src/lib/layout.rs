@@ -1,16 +1,14 @@
 
-use data::PixelLocOffset;
+use sdl2;
+
+use super::renderable::Renderable;
 
 pub struct Layout {
-    offset: PixelLocOffset,
+    bg: sdl2::pixels::Color,
+    fg: sdl2::pixels::Color,
+    rect: sdl2::rect::Rect,
 }
 
-impl Layout {
-    pub fn new(offset: PixelLocOffset) -> Self {
-        Layout { offset: offset }
-    }
-
-    pub fn get_offset(&self) -> &PixelLocOffset {
-        &self.offset
-    }
+pub fn layout<'a>(root: &Renderable<'a>) -> Vec<Layout> {
+    vec![]
 }
