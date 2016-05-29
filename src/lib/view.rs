@@ -3,8 +3,8 @@ use super::Renderable;
 use super::style::Style;
 
 pub struct View<'a> {
-    style: Style,
-    children: Vec<Renderable<'a>>,
+    pub style: Style,
+    pub children: Vec<Renderable<'a>>,
 }
 
 impl<'a> View<'a> {

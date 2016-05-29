@@ -1,5 +1,7 @@
 
-use data::Size;
+use std::default::Default;
+
+use sdl2;
 
 // border-box: content-box -- border and padding included in height width
 // flexbox
@@ -25,12 +27,41 @@ use data::Size;
 // overflow 'visible', 'hidden' (wrap?)
 // elevation (shadows to lower layer)
 
+// only dim in flex direction applies e.g. row only width, col only height
 pub struct Style {
-    pub size: Size,
+    pub width: Option<u32>,
+    pub height: Option<u32>,
+    pub fg: Option<sdl2::pixels::Color>,
+    pub bg: Option<sdl2::pixels::Color>,
 }
 
 impl Style {
-    pub fn new(size: Size) -> Self {
-        Style { size: size }
+    pub fn new() -> Self {
+        Style {
+            width: Default::default(),
+            height: Default::default(),
+            fg: Default::default(),
+            bg: Default::default(),
+        }
+    }
+
+    pub fn with_width(mut self, width: u32) -> Self {
+        self.width = Some(width);
+        self
+    }
+
+    pub fn with_height(mut self, height: u32) -> Self {
+        self.height = Some(height);
+        self
+    }
+
+    pub fn with_fg(mut self, fg: sdl2::pixels::Color) -> Self {
+        self.fg = Some(fg);
+        self
+    }
+
+    pub fn with_bg(mut self, bg: sdl2::pixels::Color) -> Self {
+        self.bg = Some(bg);
+        self
     }
 }

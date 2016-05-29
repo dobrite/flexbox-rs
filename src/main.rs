@@ -5,7 +5,6 @@ mod events;
 mod lib;
 mod render;
 
-use data::Size;
 use events::Events;
 use lib::{layout, Renderable, Style, View};
 use render::render;
@@ -14,10 +13,10 @@ fn main() {
     let sdl_context = sdl2::init().unwrap();
     let video = sdl_context.video().unwrap();
 
-    let size = Size::new(800, 600);
+    let width: u32 = 800;
+    let height: u32 = 600;
 
-    // TODO assert this cast is ok
-    let window = video.window("flexbox-rs", size.width as u32, size.height as u32)
+    let window = video.window("flexbox-rs", width, height)
         .position_centered()
         .opengl()
         .build()
@@ -30,10 +29,10 @@ fn main() {
 
     let mut events = Events::new(sdl_context.event_pump().unwrap());
 
-    let root = Renderable::View(View::new(Style::new(size),
+    let root = Renderable::View(View::new(Style::new().with_width(width).with_height(height),
                                           vec![
-        Renderable::View(View::new(Style::new(Size::new(50, 100)), vec![])),
-        Renderable::View(View::new(Style::new(Size::new(50, 100)), vec![])),
+        Renderable::View(View::new(Style::new().with_width(50).with_height(100), vec![])),
+        Renderable::View(View::new(Style::new().with_width(50).with_height(100), vec![])),
     ]));
 
     loop {
