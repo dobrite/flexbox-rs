@@ -1,6 +1,7 @@
 
 use sdl2;
 
+use super::cursor::Cursor;
 use super::renderable::Renderable;
 
 // TODO wrap these or abtract them
@@ -12,8 +13,11 @@ pub struct Layout {
     pub rect: sdl2::rect::Rect,
 }
 
-// TODO make cursor a struct
-pub fn layout<'a>(r: &Renderable<'a>, cursor: (u32, u32)) -> (Vec<Layout>, (u32, u32)) {
+pub fn layout<'a>(r: &Renderable<'a>) -> Vec<Layout> {
+    recurse(r, Cursor::default()).0
+}
+
+fn recurse<'a>(r: &Renderable<'a>, cursor: Cursor) -> (Vec<Layout>, Cursor) {
     let mut v = vec![];
     let mut new_cursor = cursor;
 
@@ -22,16 +26,16 @@ pub fn layout<'a>(r: &Renderable<'a>, cursor: (u32, u32)) -> (Vec<Layout>, (u32,
             v.push(Layout {
                 bg: view.style.bg.unwrap(), // TODO ugh
                 fg: view.style.fg.unwrap(), // TODO ugh
-                rect: sdl2::rect::Rect::new(cursor.0 as i32,
-                                            cursor.1 as i32,
+                rect: sdl2::rect::Rect::new(cursor.x as i32,
+                                            cursor.y as i32,
                                             view.style.width.unwrap(), // TODO ugh
                                             view.style.height.unwrap()), // TODO ugh
             });
 
             for child in view.children.iter() {
-                let (ref mut l, n_c) = layout(child, new_cursor);
+                let (ref mut l, n_c) = recurse(child, new_cursor);
                 // TODO this is `row`, do `column`
-                new_cursor.0 += match child {
+                new_cursor.x += match child {
                     &Renderable::View(ref view) => view.style.width.unwrap(), // TODO ugh
                     &Renderable::Text(text) => 0u32, // TODO
                 };

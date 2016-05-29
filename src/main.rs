@@ -52,6 +52,6 @@ fn main() {
             break;
         }
 
-        render(&mut renderer, &layout(&root, (0, 0)).0);
+        render(&mut renderer, &layout(&root));
     }
 }
