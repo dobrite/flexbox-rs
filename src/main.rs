@@ -1,5 +1,7 @@
 extern crate sdl2;
 
+use sdl2::pixels;
+
 mod data;
 mod events;
 mod lib;
@@ -29,10 +31,18 @@ fn main() {
 
     let mut events = Events::new(sdl_context.event_pump().unwrap());
 
-    let root = Renderable::View(View::new(Style::new().with_width(width).with_height(height),
+    let root = Renderable::View(View::new(Style::new()
+                                              .with_width(width)
+                                              .with_height(height)
+                                              .with_bg(sdl2::pixels::Color::RGB(0, 0, 0))
+                                              .with_fg(sdl2::pixels::Color::RGB(0, 0, 0)),
                                           vec![
-        Renderable::View(View::new(Style::new().with_width(50).with_height(100), vec![])),
-        Renderable::View(View::new(Style::new().with_width(50).with_height(100), vec![])),
+        Renderable::View(View::new(Style::new().with_width(50).with_height(100)
+                                   .with_bg(sdl2::pixels::Color::RGB(255, 0, 0))
+                                   .with_fg(sdl2::pixels::Color::RGB(0, 0, 0)), vec![])),
+        Renderable::View(View::new(Style::new().with_width(50).with_height(100)
+                                   .with_bg(sdl2::pixels::Color::RGB(0, 255, 0))
+                                   .with_fg(sdl2::pixels::Color::RGB(0, 0, 0)), vec![])),
     ]));
 
     loop {
@@ -42,6 +52,6 @@ fn main() {
             break;
         }
 
-        render(&mut renderer, &layout(&root));
+        render(&mut renderer, &layout(&root, (0, 0)).0);
     }
 }

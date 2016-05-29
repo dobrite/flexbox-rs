@@ -1,6 +1,9 @@
 /// a generic struct for something with width and height
 /// can be any units i.e. not just "tiles"
 #[derive(Clone, Copy, Debug, Eq, Hash, PartialEq)]
+
+// TODO get rid of this if it isn't used
+
 pub struct Size {
     pub width: i32,
     pub height: i32,

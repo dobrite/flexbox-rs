@@ -7,10 +7,11 @@ use lib::Layout;
 
 pub struct Renderer { }
 
-pub fn render(renderer: &mut sdl2::render::Renderer, layout: &[Layout]) {
-    renderer.set_draw_color(Color::RGB(0, 0, 0));
-    renderer.clear();
-    renderer.set_draw_color(Color::RGB(255, 255, 255));
-    let _ = renderer.draw_rect(Rect::new(100, 200, 78, 20));
-    renderer.present();
+pub fn render(r: &mut sdl2::render::Renderer, layout: &[Layout]) {
+    for l in layout {
+        r.set_draw_color(l.bg);
+        let _ = r.fill_rect(l.rect);
+    }
+
+    r.present();
 }
