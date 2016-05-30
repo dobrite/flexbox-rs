@@ -1,15 +1,14 @@
 extern crate sdl2;
+extern crate flexbox;
 
-mod lib;
-mod sdl2_harness;
+mod sdl2_utils;
 
-use sdl2_harness::Events;
-use lib::{layout, Renderable, RGB, Style, View, Render};
+use sdl2_utils::Events;
+use flexbox::{layout, Renderable, RGB, Style, View, Render};
 
 fn main() {
     let sdl_context = sdl2::init().unwrap();
     let video = sdl_context.video().unwrap();
-
 
     let width: u32 = 800;
     let height: u32 = 600;

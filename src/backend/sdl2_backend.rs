@@ -1,7 +1,11 @@
+#![cfg(feature = "sdl2")]
 
-use sdl2;
+pub extern crate sdl2;
 
-use lib::{Layout, Rect, RGB, Render};
+use layout::Layout;
+use render::Render;
+use rect::Rect;
+use rgb::RGB;
 
 impl<'a> Render for sdl2::render::Renderer<'a> {
     fn render(&mut self, layout: &[Layout]) {
