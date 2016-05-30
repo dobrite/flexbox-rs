@@ -1,10 +1,9 @@
 extern crate sdl2;
 
-mod events;
 mod lib;
-mod render;
+mod sdl2_harness;
 
-use events::Events;
+use sdl2_harness::Events;
 use lib::{layout, Renderable, RGB, Style, View, Render};
 
 fn main() {
