@@ -1,8 +1,5 @@
 extern crate sdl2;
 
-use sdl2::pixels;
-
-mod data;
 mod events;
 mod lib;
 mod render;
@@ -14,6 +11,7 @@ use render::render;
 fn main() {
     let sdl_context = sdl2::init().unwrap();
     let video = sdl_context.video().unwrap();
+
 
     let width: u32 = 800;
     let height: u32 = 600;

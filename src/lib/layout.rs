@@ -33,17 +33,17 @@ fn recurse<'a>(r: &Renderable<'a>, cursor: Cursor) -> (Vec<Layout>, Cursor) {
             });
 
             for child in view.children.iter() {
-                let (ref mut l, n_c) = recurse(child, new_cursor);
+                let (ref mut l, _) = recurse(child, new_cursor);
                 // TODO this is `row`, do `column`
                 new_cursor.x += match child {
                     &Renderable::View(ref view) => view.style.width.unwrap(), // TODO ugh
-                    &Renderable::Text(text) => 0u32, // TODO
+                    &Renderable::Text(_) => 0u32, // TODO
                 };
 
                 v.append(l);
             }
         }
-        &Renderable::Text(ref text) => {
+        &Renderable::Text(_) => {
             println!("text");
         }
     }

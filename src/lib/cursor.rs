@@ -8,10 +8,6 @@ pub struct Cursor {
 }
 
 impl Cursor {
-    pub fn new(x: u32, y: u32) -> Self {
-        Cursor { x: x, y: y }
-    }
-
     pub fn default() -> Self {
         Default::default()
     }
