@@ -1,5 +1,5 @@
 [package]
-name = "flexbox-rs"
+name = "flexbox"
 version = "0.0.1"
 authors = ["Dave O <davidobrite@gmail.com>"]
 

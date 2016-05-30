@@ -1,5 +1,5 @@
 [root]
-name = "flexbox-rs"
+name = "flexbox"
 version = "0.0.1"
 dependencies = [
  "sdl2 0.19.0 (registry+https://github.com/rust-lang/crates.io-index)",
