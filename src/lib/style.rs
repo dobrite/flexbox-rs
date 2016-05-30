@@ -1,7 +1,7 @@
 
 use std::default::Default;
 
-use sdl2;
+use super::rgb::RGB;
 
 // border-box: content-box -- border and padding included in height width
 // flexbox
@@ -31,8 +31,8 @@ use sdl2;
 pub struct Style {
     pub width: Option<u32>,
     pub height: Option<u32>,
-    pub fg: Option<sdl2::pixels::Color>,
-    pub bg: Option<sdl2::pixels::Color>,
+    pub fg: Option<RGB<u8>>,
+    pub bg: Option<RGB<u8>>,
 }
 
 impl Style {
@@ -55,12 +55,12 @@ impl Style {
         self
     }
 
-    pub fn with_fg(mut self, fg: sdl2::pixels::Color) -> Self {
+    pub fn with_fg(mut self, fg: RGB<u8>) -> Self {
         self.fg = Some(fg);
         self
     }
 
-    pub fn with_bg(mut self, bg: sdl2::pixels::Color) -> Self {
+    pub fn with_bg(mut self, bg: RGB<u8>) -> Self {
         self.bg = Some(bg);
         self
     }

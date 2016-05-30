@@ -5,7 +5,7 @@ mod lib;
 mod render;
 
 use events::Events;
-use lib::{layout, Renderable, Style, View};
+use lib::{layout, Renderable, RGB, Style, View};
 use render::render;
 
 fn main() {
@@ -32,15 +32,15 @@ fn main() {
     let root = Renderable::View(View::new(Style::new()
                                               .with_width(width)
                                               .with_height(height)
-                                              .with_bg(sdl2::pixels::Color::RGB(0, 0, 0))
-                                              .with_fg(sdl2::pixels::Color::RGB(0, 0, 0)),
+                                              .with_bg(RGB::new(0, 0, 0))
+                                              .with_fg(RGB::new(0, 0, 0)),
                                           vec![
         Renderable::View(View::new(Style::new().with_width(50).with_height(100)
-                                   .with_bg(sdl2::pixels::Color::RGB(255, 0, 0))
-                                   .with_fg(sdl2::pixels::Color::RGB(0, 0, 0)), vec![])),
+                                   .with_bg(RGB::new(255, 0, 0))
+                                   .with_fg(RGB::new(0, 0, 0)), vec![])),
         Renderable::View(View::new(Style::new().with_width(50).with_height(100)
-                                   .with_bg(sdl2::pixels::Color::RGB(0, 255, 0))
-                                   .with_fg(sdl2::pixels::Color::RGB(0, 0, 0)), vec![])),
+                                   .with_bg(RGB::new(0, 255, 0))
+                                   .with_fg(RGB::new(0, 0, 0)), vec![])),
     ]));
 
     loop {

@@ -1,16 +1,15 @@
 
-use sdl2;
-
 use super::cursor::Cursor;
+use super::rect::Rect;
 use super::renderable::Renderable;
+use super::rgb::RGB;
 
 // TODO wrap these or abtract them
 // TODO keep these pub or do some chaining builder thingy?
-#[derive(Debug)]
 pub struct Layout {
-    pub bg: sdl2::pixels::Color,
-    pub fg: sdl2::pixels::Color,
-    pub rect: sdl2::rect::Rect,
+    pub bg: RGB<u8>,
+    pub fg: RGB<u8>,
+    pub rect: Rect,
 }
 
 pub fn layout<'a>(r: &Renderable<'a>) -> Vec<Layout> {
@@ -26,10 +25,10 @@ fn recurse<'a>(r: &Renderable<'a>, cursor: Cursor) -> (Vec<Layout>, Cursor) {
             v.push(Layout {
                 bg: view.style.bg.unwrap(), // TODO ugh
                 fg: view.style.fg.unwrap(), // TODO ugh
-                rect: sdl2::rect::Rect::new(cursor.x as i32,
-                                            cursor.y as i32,
-                                            view.style.width.unwrap(), // TODO ugh
-                                            view.style.height.unwrap()), // TODO ugh
+                rect: Rect::new(cursor.x as i32,
+                                cursor.y as i32,
+                                view.style.width.unwrap(), // TODO ugh
+                                view.style.height.unwrap()), // TODO ugh
             });
 
             for child in view.children.iter() {
