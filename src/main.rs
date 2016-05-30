@@ -5,8 +5,7 @@ mod lib;
 mod render;
 
 use events::Events;
-use lib::{layout, Renderable, RGB, Style, View};
-use render::render;
+use lib::{layout, Renderable, RGB, Style, View, Render};
 
 fn main() {
     let sdl_context = sdl2::init().unwrap();
@@ -50,6 +49,6 @@ fn main() {
             break;
         }
 
-        render(&mut renderer, &layout(&root));
+        renderer.render(&layout(&root));
     }
 }

@@ -1,4 +1,2 @@
 
-pub use self::renderer::render;
-
-mod renderer;
+pub mod renderer;

@@ -1,15 +1,17 @@
 
 use sdl2;
 
-use lib::{Layout, Rect, RGB};
+use lib::{Layout, Rect, RGB, Render};
 
-pub fn render(r: &mut sdl2::render::Renderer, layout: &[Layout]) {
-    for l in layout {
-        r.set_draw_color(to_sdl2_color(l.bg));
-        let _ = r.fill_rect(to_sdl2_rect(l.rect));
+impl<'a> Render for sdl2::render::Renderer<'a> {
+    fn render(&mut self, layout: &[Layout]) {
+        for l in layout {
+            self.set_draw_color(to_sdl2_color(l.bg));
+            let _ = self.fill_rect(to_sdl2_rect(l.rect));
+        }
+
+        self.present();
     }
-
-    r.present();
 }
 
 fn to_sdl2_color(c: RGB<u8>) -> sdl2::pixels::Color {
