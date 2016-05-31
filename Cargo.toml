@@ -4,7 +4,7 @@ version = "0.0.1"
 authors = ["Dave O <davidobrite@gmail.com>"]
 
 [features]
-default = ["sdl2"]
+backend = ["sdl2"]
 
 [lib]
 name = "flexbox"
