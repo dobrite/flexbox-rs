@@ -1,6 +1,6 @@
 
 #[cfg(feature = "sdl2")]
-pub use backend::sdl2_backend; // maybe no sdl2?
+pub use backend::sdl2_backend;
 
 pub use layout::{layout, Layout};
 pub use rect::Rect;
