@@ -4,8 +4,6 @@ use rect::Rect;
 use renderable::Renderable;
 use rgb::RGB;
 
-// TODO wrap these or abtract them
-// TODO keep these pub or do some chaining builder thingy?
 #[derive(Debug)]
 pub struct Layout {
     pub bg: RGB<u8>,
