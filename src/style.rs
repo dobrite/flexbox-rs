@@ -29,6 +29,7 @@ use super::rgb::RGB;
 
 // only dim in flex direction applies e.g. row only width, col only height
 pub struct Style {
+    // TODO <D, C> dim, color generic types
     pub width: Option<u32>,
     pub height: Option<u32>,
     pub fg: Option<RGB<u8>>,
