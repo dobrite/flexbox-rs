@@ -47,6 +47,6 @@ fn main() {
             break;
         }
 
-        renderer.render(&layout(&root));
+        renderer.render(&layout(width, height, &root));
     }
 }
