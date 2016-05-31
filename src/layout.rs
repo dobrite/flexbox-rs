@@ -1,8 +1,8 @@
 
-use super::cursor::Cursor;
-use super::rect::Rect;
-use super::renderable::Renderable;
-use super::rgb::RGB;
+use cursor::Cursor;
+use rect::Rect;
+use renderable::Renderable;
+use rgb::RGB;
 
 // TODO wrap these or abtract them
 // TODO keep these pub or do some chaining builder thingy?

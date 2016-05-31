@@ -1,7 +1,7 @@
 
 use std::default::Default;
 
-use super::rgb::RGB;
+use rgb::RGB;
 
 // border-box: content-box -- border and padding included in height width
 // flexbox

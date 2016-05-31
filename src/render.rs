@@ -1,5 +1,5 @@
 
-use super::layout::Layout;
+use layout::Layout;
 
 pub trait Render {
     fn render(&mut self, layout: &[Layout]);

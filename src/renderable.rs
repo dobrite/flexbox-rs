@@ -1,5 +1,5 @@
 
-use super::view;
+use view;
 
 #[allow(dead_code)]
 pub enum Renderable<'a> {

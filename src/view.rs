@@ -1,6 +1,6 @@
 
-use super::Renderable;
-use super::style::Style;
+use Renderable;
+use style::Style;
 
 pub struct View<'a> {
     pub style: Style,
