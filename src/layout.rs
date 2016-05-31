@@ -17,6 +17,7 @@ pub fn layout<'a>(width: u32, height: u32, r: &Renderable<'a>) -> Vec<Layout> {
     recurse(r, Cursor::new(width, height)).0
 }
 
+// TODO some sort of From or Into would be nice to not have to wrap everythign in the enum
 fn recurse<'a>(r: &Renderable<'a>, cursor: Cursor) -> (Vec<Layout>, Cursor) {
     let mut v = vec![];
     let mut new_cursor = cursor;
