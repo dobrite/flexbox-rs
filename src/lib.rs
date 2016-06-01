@@ -10,12 +10,13 @@ pub use rgb::RGB;
 pub use style::Style;
 pub use view::View;
 
-pub mod backend;
 mod cursor;
 mod layout;
 mod rect;
-pub mod render;
 mod renderable;
 mod rgb;
 mod style;
+mod text;
 mod view;
+pub mod backend;
+pub mod render;
