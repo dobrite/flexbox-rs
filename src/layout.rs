@@ -28,7 +28,7 @@ fn recurse<'a>(r: &Renderable<'a>, cursor: Cursor) -> (Vec<Layout>, Cursor) {
                 rect: Rect::new(cursor.x as i32,
                                 cursor.y as i32,
                                 view.style.width.unwrap_or(cursor.width),
-                                view.style.height.unwrap_or(0)),
+                                view.style.height.unwrap_or(cursor.height)),
             });
 
             for child in view.children.iter() {
