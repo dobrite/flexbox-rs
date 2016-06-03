@@ -19,6 +19,30 @@ impl Layout {
             rect: rect,
         }
     }
+
+    pub fn fg(&self) -> RGB<u8> {
+        self.fg
+    }
+
+    pub fn bg(&self) -> RGB<u8> {
+        self.bg
+    }
+
+    pub fn top(&self) -> i32 {
+        self.rect.top
+    }
+
+    pub fn left(&self) -> i32 {
+        self.rect.left
+    }
+
+    pub fn width(&self) -> u32 {
+        self.rect.width
+    }
+
+    pub fn height(&self) -> u32 {
+        self.rect.height
+    }
 }
 
 /// all views come with `display: flex` by default.
