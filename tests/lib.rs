@@ -24,6 +24,26 @@ fn it_sets_root_height_to_0_with_default_height_no_children() {
 }
 
 #[test]
+fn it_sets_root_bg_to_white_no_children() {
+    let width = 800u32;
+    let height = 600u32;
+    let root = Renderable::View(View::new(Style::new(), vec![]));
+    let layout = layout(width, height, &root);
+    assert!(layout.len() == 1);
+    assert_eq!(RGB::new(255, 255, 255), layout[0].bg);
+}
+
+#[test]
+fn it_sets_root_fg_to_black_no_children() {
+    let width = 800u32;
+    let height = 600u32;
+    let root = Renderable::View(View::new(Style::new(), vec![]));
+    let layout = layout(width, height, &root);
+    assert!(layout.len() == 1);
+    assert_eq!(RGB::new(0, 0, 0), layout[0].fg);
+}
+
+#[test]
 fn it_sets_root_width_to_800_with_no_children() {
     let width = 800u32;
     let height = 100u32;
