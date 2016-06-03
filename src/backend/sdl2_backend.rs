@@ -23,5 +23,5 @@ fn to_sdl2_color(c: RGB<u8>) -> sdl2::pixels::Color {
 }
 
 fn to_sdl2_rect(r: Rect) -> sdl2::rect::Rect {
-    sdl2::rect::Rect::new(r.top, r.left, r.width, r.height)
+    sdl2::rect::Rect::new(r.left, r.top, r.width, r.height)
 }
