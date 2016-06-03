@@ -37,7 +37,6 @@ pub fn layout<'a>(width: u32, height: u32, r: &Renderable<'a>) -> Vec<Layout> {
 // TODO some sort of From or Into would be nice to not have to wrap everythign in the enum
 fn recurse<'a>(r: &Renderable<'a>, cursor: Cursor) -> (Vec<Layout>, Cursor) {
     let mut v = vec![];
-    let mut new_cursor = cursor;
 
     match r {
         &Renderable::View(ref view) => {
@@ -48,15 +47,11 @@ fn recurse<'a>(r: &Renderable<'a>, cursor: Cursor) -> (Vec<Layout>, Cursor) {
                                          view.style.width.unwrap_or(cursor.width),
                                          view.style.height.unwrap_or(cursor.height))));
 
-            for child in view.children.iter() {
-                let (ref mut l, _) = recurse(child, new_cursor);
-                // TODO this is `row`, do `column`
-                new_cursor.x += match child {
-                    &Renderable::View(ref view) => view.style.width.unwrap(), // TODO ugh
-                    &Renderable::Text(_) => 0u32, // TODO
-                };
-
-                v.append(l);
+            for child in &view.children {
+                let mut new_cursor = cursor;
+                new_cursor.width = 0;
+                let (ref mut ls, nc) = recurse(child, new_cursor);
+                v.append(ls);
             }
         }
         &Renderable::Text(_) => {
@@ -64,7 +59,7 @@ fn recurse<'a>(r: &Renderable<'a>, cursor: Cursor) -> (Vec<Layout>, Cursor) {
         }
     }
 
-    (v, new_cursor)
+    (v, cursor)
 }
 
 // let root = Renderable::View(View::new(Style::new().with_width(width).with_height(height),
