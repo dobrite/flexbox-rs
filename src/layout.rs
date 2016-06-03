@@ -59,7 +59,7 @@ pub fn layout<'a>(width: u32, height: u32, r: &Renderable<'a>) -> Vec<Layout> {
 }
 
 // TODO some sort of From or Into would be nice to not have to wrap everythign in the enum
-fn recurse<'a>(r: &Renderable<'a>, cursor: Cursor) -> (Vec<Layout>, Cursor) {
+fn recurse<'a>(r: &Renderable<'a>, mut cursor: Cursor) -> (Vec<Layout>, Cursor) {
     let mut v = vec![];
 
     match r {
@@ -71,12 +71,18 @@ fn recurse<'a>(r: &Renderable<'a>, cursor: Cursor) -> (Vec<Layout>, Cursor) {
                                          view.style.width.unwrap_or(cursor.width),
                                          view.style.height.unwrap_or(cursor.height))));
 
+            let mut new_cursor = cursor;
             for child in &view.children {
-                let mut new_cursor = cursor;
                 new_cursor.width = 0;
                 let (ref mut ls, nc) = recurse(child, new_cursor);
+                new_cursor.x += nc.x;
                 v.append(ls);
             }
+
+            // this happen in row (default)
+            cursor.x = view.style.width.unwrap_or(cursor.width);
+            // this happens in column
+            // cursor.y = view.style.height.unwrap_or(cursor.height);
         }
         &Renderable::Text(_) => {
             println!("text");
@@ -85,18 +91,3 @@ fn recurse<'a>(r: &Renderable<'a>, cursor: Cursor) -> (Vec<Layout>, Cursor) {
 
     (v, cursor)
 }
-
-// let root = Renderable::View(View::new(Style::new().with_width(width).with_height(height),
-//    vec![
-//        Renderable::View(View::new(Style::new().with_width(50)
-//          .with_height(100).with_bg(Color::RGB(255, 0, 0)), vec![])),
-//        Renderable::View(View::new(Style::new().with_width(50)
-//          .with_height(100).with_bg(Color::RGB(0, 255, 0)), vec![])),
-//    ]
-// ));
-
-// [
-//   Layout { bg: Color::RGB(0, 0, 0), Rect::new(0, 0, 800, 600) },
-//   Layout { bg: Color::RGB(255, 0, 0), Rect::new(0, 0, 50, 100) },
-//   Layout { bg: Color::RGB(0, 255, 0), Rect::new(50, 0, 50, 100) },
-// ]
