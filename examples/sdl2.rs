@@ -26,11 +26,7 @@ fn main() {
 
     let mut events = Events::new(sdl_context.event_pump().unwrap());
 
-    let root = Renderable::View(View::new(Style::new()
-                                              .with_width(width)
-                                              .with_height(height)
-                                              .with_bg(RGB::new(0, 0, 0))
-                                              .with_fg(RGB::new(0, 0, 0)),
+    let root = Renderable::View(View::new(Style::new().with_bg(RGB::new(0, 0, 0)),
                                           vec![
         Renderable::View(View::new(Style::new().with_width(50).with_height(100)
                                    .with_bg(RGB::new(255, 0, 0))
