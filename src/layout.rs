@@ -21,6 +21,15 @@ impl Layout {
     }
 }
 
+/// all views come with `display: flex` by default.
+
+/// width, height reps div child inside body with w/h set.
+/// i.e.
+/// <body>
+///   <div style="width: 800px; height: 600px;">
+///   </div>
+/// </body>
+
 pub fn layout<'a>(width: u32, height: u32, r: &Renderable<'a>) -> Vec<Layout> {
     recurse(r, Cursor::new(width, height)).0
 }
