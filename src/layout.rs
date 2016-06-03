@@ -11,6 +11,16 @@ pub struct Layout {
     pub rect: Rect,
 }
 
+impl Layout {
+    pub fn new(bg: RGB<u8>, fg: RGB<u8>, rect: Rect) -> Self {
+        Layout {
+            bg: bg,
+            fg: fg,
+            rect: rect,
+        }
+    }
+}
+
 pub fn layout<'a>(width: u32, height: u32, r: &Renderable<'a>) -> Vec<Layout> {
     recurse(r, Cursor::new(width, height)).0
 }
@@ -22,14 +32,12 @@ fn recurse<'a>(r: &Renderable<'a>, cursor: Cursor) -> (Vec<Layout>, Cursor) {
 
     match r {
         &Renderable::View(ref view) => {
-            v.push(Layout {
-                bg: view.style.bg.unwrap_or(cursor.bg),
-                fg: view.style.fg.unwrap_or(cursor.fg),
-                rect: Rect::new(cursor.x as i32,
-                                cursor.y as i32,
-                                view.style.width.unwrap_or(cursor.width),
-                                view.style.height.unwrap_or(cursor.height)),
-            });
+            v.push(Layout::new(view.style.bg.unwrap_or(cursor.bg),
+                               view.style.fg.unwrap_or(cursor.fg),
+                               Rect::new(cursor.x as i32,
+                                         cursor.y as i32,
+                                         view.style.width.unwrap_or(cursor.width),
+                                         view.style.height.unwrap_or(cursor.height))));
 
             for child in view.children.iter() {
                 let (ref mut l, _) = recurse(child, new_cursor);
