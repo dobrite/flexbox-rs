@@ -28,6 +28,7 @@ use rgb::RGB;
 // elevation (shadows to lower layer)
 
 // only dim in flex direction applies e.g. row only width, col only height
+#[derive(Debug)]
 pub struct Style {
     // TODO <D, C> dim, color generic types
     pub width: Option<u32>,
