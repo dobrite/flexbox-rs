@@ -1,5 +1,5 @@
 
-#[derive(Clone, Copy, Debug, Default)]
+#[derive(Clone, Copy, Debug, Default, PartialEq)]
 pub struct RGB<T> {
     pub r: T,
     pub g: T,
