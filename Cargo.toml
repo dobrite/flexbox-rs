@@ -4,7 +4,7 @@ version = "0.0.1"
 authors = ["Dave O <davidobrite@gmail.com>"]
 
 [features]
-backend = ["sdl2"]
+backend = ["sdl2", "sdl2_ttf"]
 
 [lib]
 name = "flexbox"
@@ -12,3 +12,4 @@ path = "src/lib.rs"
 
 [dependencies]
 sdl2 = { version = "0.19.0", optional = true }
+sdl2_ttf = { version = "0.19.0", optional = true }
