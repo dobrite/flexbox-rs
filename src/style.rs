@@ -3,6 +3,18 @@ use std::default::Default;
 
 use rgb::RGB;
 
+#[derive(Debug)]
+pub enum FlexDirection {
+    Row,
+    Column,
+}
+
+impl Default for FlexDirection {
+    fn default() -> FlexDirection {
+        FlexDirection::Row
+    }
+}
+
 // border-box: content-box -- border and padding included in height width
 // flexbox
 //   alignItems -- laid out along the cross axis
@@ -35,6 +47,7 @@ pub struct Style {
     pub height: Option<u32>,
     pub fg: Option<RGB<u8>>,
     pub bg: Option<RGB<u8>>,
+    pub flex_direction: FlexDirection,
 }
 
 impl Style {
@@ -44,6 +57,7 @@ impl Style {
             height: Default::default(),
             fg: Default::default(),
             bg: Default::default(),
+            flex_direction: Default::default(),
         }
     }
 
