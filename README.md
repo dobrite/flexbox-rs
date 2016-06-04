@@ -51,4 +51,6 @@ $ cargo run --example sdl2 --features backend
 $ cargo test --features backend
 ```
 
-#### NOTE: The game loop boilerplate was taken from [ArcadeRS](http://jadpole.github.io/arcaders/arcaders-1-0) by jadpole. Much <3 for such a great series.
+### Disclaimer
+
+The game loop and input boilerplate was taken from [ArcadeRS](http://jadpole.github.io/arcaders/arcaders-1-0) by jadpole. Much <3 for such a great series.
