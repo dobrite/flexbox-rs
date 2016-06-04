@@ -42,3 +42,5 @@ Suitable for input into a user-supplied `Renderer` implementing the `Render` tra
 is in the backend folder and used in the sdl2 example.
 
 ![flexbox-rs sdl2 example](https://cloud.githubusercontent.com/assets/1541631/15799928/f30fad30-2a21-11e6-8da0-020f4ddfdebb.png)
+
+#### NOTE: The game loop boilerplate was taken from [ArcadeRS](http://jadpole.github.io/arcaders/arcaders-1-0) by jadpole. Much <3 for such a great series.
