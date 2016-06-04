@@ -1,11 +1,3 @@
-```
-$ cargo run --example sdl2 --features backend
-```
-
-```
-$ cargo test --features backend
-```
-
 ### What is this?
 
 Some sort of opinionated minimal implementation of flexbox in Rust.
@@ -42,5 +34,21 @@ Suitable for input into a user-supplied `Renderer` implementing the `Render` tra
 is in the backend folder and used in the sdl2 example.
 
 ![flexbox-rs sdl2 example](https://cloud.githubusercontent.com/assets/1541631/15799928/f30fad30-2a21-11e6-8da0-020f4ddfdebb.png)
+
+### Running the example
+
+> NOTE: you'll need SDL2 and SDL2_ttf installed. Installation is platform specific. Please consult the docs.
+
+```bash
+$ cargo run --example sdl2 --features backend
+```
+
+### Running the tests
+
+> NOTE: you'll need SDL2 and SDL2_ttf installed. Installation is platform specific. Please consult the docs.
+
+```bash
+$ cargo test --features backend
+```
 
 #### NOTE: The game loop boilerplate was taken from [ArcadeRS](http://jadpole.github.io/arcaders/arcaders-1-0) by jadpole. Much <3 for such a great series.
