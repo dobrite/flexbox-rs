@@ -60,6 +60,7 @@ pub fn layout<'a>(width: u32, height: u32, r: &Renderable<'a>) -> Vec<Layout> {
 }
 
 // TODO some sort of From or Into would be nice to not have to wrap everythign in the enum
+// TODO pass vec down and back up. right now we're allocating a bunch
 fn recurse<'a>(r: &Renderable<'a>, mut cursor: Cursor) -> (Vec<Layout>, Cursor) {
     let mut v = vec![];
 
@@ -77,8 +78,13 @@ fn recurse<'a>(r: &Renderable<'a>, mut cursor: Cursor) -> (Vec<Layout>, Cursor) 
             for child in &view.children {
                 parent_cursor.width = 0;
                 let (ref mut ls, nc) = recurse(child, parent_cursor);
-                parent_cursor.x += nc.x;
-                parent_cursor.y += nc.y;
+
+                if parent_cursor.flex_direction == style::FlexDirection::Row {
+                    parent_cursor.x += nc.x;
+                } else {
+                    parent_cursor.y += nc.y;
+                }
+
                 v.append(ls);
             }
 

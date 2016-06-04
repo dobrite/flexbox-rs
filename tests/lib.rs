@@ -181,3 +181,47 @@ fn it_sets_two_child_rect_column() {
     assert_eq!(100, child.top());
     assert_eq!(0, child.left());
 }
+
+#[test]
+fn it_sets_two_child_two_child_rect_column() {
+    let width = 800u32;
+    let height = 600u32;
+
+    let root = Renderable::View(View::new(Style::new().with_flex_direction(FlexDirection::Column),
+                                          vec![
+        Renderable::View(View::new(Style::new().with_height(100).with_width(50), vec![])),
+        Renderable::View(View::new(Style::new().with_height(100).with_width(50), vec![
+            Renderable::View(View::new(Style::new().with_height(25).with_width(15), vec![])),
+            Renderable::View(View::new(Style::new().with_height(25).with_width(15), vec![])),
+        ])),
+    ]));
+
+
+    let layout = layout(width, height, &root);
+    debug_layout(&layout);
+    assert!(layout.len() == 5);
+
+    let mut child = &layout[1];
+    assert_eq!(100, child.height());
+    assert_eq!(50, child.width());
+    assert_eq!(0, child.top());
+    assert_eq!(0, child.left());
+
+    child = &layout[2];
+    assert_eq!(100, child.height());
+    assert_eq!(50, child.width());
+    assert_eq!(100, child.top());
+    assert_eq!(0, child.left());
+
+    let mut child = &layout[3];
+    assert_eq!(25, child.height());
+    assert_eq!(15, child.width());
+    assert_eq!(100, child.top());
+    assert_eq!(0, child.left());
+
+    child = &layout[4];
+    assert_eq!(25, child.height());
+    assert_eq!(15, child.width());
+    assert_eq!(100, child.top());
+    assert_eq!(15, child.left());
+}
