@@ -7,7 +7,7 @@ pub use rect::Rect;
 pub use render::Render;
 pub use renderable::Renderable;
 pub use rgb::RGB;
-pub use style::Style;
+pub use style::{FlexDirection, Style};
 pub use view::View;
 
 mod cursor;

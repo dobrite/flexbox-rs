@@ -3,6 +3,7 @@ use cursor::Cursor;
 use rect::Rect;
 use renderable::Renderable;
 use rgb::RGB;
+use style;
 
 #[derive(Debug)]
 pub struct Layout {
@@ -71,18 +72,21 @@ fn recurse<'a>(r: &Renderable<'a>, mut cursor: Cursor) -> (Vec<Layout>, Cursor) 
                                          view.style.width.unwrap_or(cursor.width),
                                          view.style.height.unwrap_or(cursor.height))));
 
-            let mut new_cursor = cursor;
+            let mut parent_cursor = cursor;
+            parent_cursor.flex_direction = view.style.flex_direction;
             for child in &view.children {
-                new_cursor.width = 0;
-                let (ref mut ls, nc) = recurse(child, new_cursor);
-                new_cursor.x += nc.x;
+                parent_cursor.width = 0;
+                let (ref mut ls, nc) = recurse(child, parent_cursor);
+                parent_cursor.x += nc.x;
+                parent_cursor.y += nc.y;
                 v.append(ls);
             }
 
-            // this happen in row (default)
-            cursor.x = view.style.width.unwrap_or(cursor.width);
-            // this happens in column
-            // cursor.y = view.style.height.unwrap_or(cursor.height);
+            if cursor.flex_direction == style::FlexDirection::Row {
+                cursor.x = view.style.width.unwrap_or(cursor.width);
+            } else {
+                cursor.y = view.style.height.unwrap_or(cursor.height);
+            }
         }
         &Renderable::Text(_) => {
             println!("text");

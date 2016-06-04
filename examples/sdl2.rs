@@ -4,7 +4,7 @@ extern crate flexbox;
 mod sdl2_utils;
 
 use sdl2_utils::Events;
-use flexbox::{layout, Renderable, RGB, Style, View, Render};
+use flexbox::{layout, FlexDirection, Renderable, RGB, Style, View, Render};
 
 fn main() {
     let sdl_context = sdl2::init().unwrap();
@@ -26,7 +26,9 @@ fn main() {
 
     let mut events = Events::new(sdl_context.event_pump().unwrap());
 
-    let root = Renderable::View(View::new(Style::new().with_bg(RGB::new(0, 0, 0)),
+    let root = Renderable::View(View::new(Style::new()
+                                              .with_bg(RGB::new(0, 0, 0))
+                                              .with_flex_direction(FlexDirection::Column),
                                           vec![
         Renderable::View(View::new(Style::new().with_width(50).with_height(100)
                                    .with_bg(RGB::new(255, 0, 0))

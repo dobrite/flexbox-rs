@@ -80,4 +80,9 @@ impl Style {
         self.bg = Some(bg);
         self
     }
+
+    pub fn with_flex_direction(mut self, fd: FlexDirection) -> Self {
+        self.flex_direction = fd;
+        self
+    }
 }

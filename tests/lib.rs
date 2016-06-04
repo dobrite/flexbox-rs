@@ -3,6 +3,12 @@ extern crate flexbox;
 
 use flexbox::*;
 
+fn debug_layout(layout: &[Layout]) {
+    for l in layout {
+        println!("{:?}", l)
+    }
+}
+
 #[test]
 fn it_sets_root_width_to_width_with_default_height_no_children() {
     let width = 800u32;
@@ -119,7 +125,7 @@ fn it_sets_single_child_dim() {
 }
 
 #[test]
-fn it_sets_two_child_rect() {
+fn it_sets_two_child_rect_row() {
     let width = 800u32;
     let height = 600u32;
     let children_width = 50u32;
@@ -133,7 +139,6 @@ fn it_sets_two_child_rect() {
 
     let layout = layout(width, height, &root);
     assert!(layout.len() == 3);
-    println!("{:?}", layout);
 
     let mut child = &layout[1];
     assert_eq!(children_height, child.height());
@@ -146,4 +151,33 @@ fn it_sets_two_child_rect() {
     assert_eq!(children_width, child.width());
     assert_eq!(0, child.top());
     assert_eq!(50, child.left());
+}
+
+#[test]
+fn it_sets_two_child_rect_column() {
+    let width = 800u32;
+    let height = 600u32;
+    let children_width = 50u32;
+    let children_height = 100u32;
+
+    let root = Renderable::View(View::new(Style::new().with_flex_direction(FlexDirection::Column),
+                                          vec![
+        Renderable::View(View::new(Style::new().with_height(children_height).with_width(children_width), vec![])),
+        Renderable::View(View::new(Style::new().with_height(children_height).with_width(children_width), vec![])),
+    ]));
+
+    let layout = layout(width, height, &root);
+    assert!(layout.len() == 3);
+
+    let mut child = &layout[1];
+    assert_eq!(children_height, child.height());
+    assert_eq!(children_width, child.width());
+    assert_eq!(0, child.top());
+    assert_eq!(0, child.left());
+
+    child = &layout[2];
+    assert_eq!(children_height, child.height());
+    assert_eq!(children_width, child.width());
+    assert_eq!(100, child.top());
+    assert_eq!(0, child.left());
 }
