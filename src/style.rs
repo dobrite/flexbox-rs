@@ -3,7 +3,7 @@ use std::default::Default;
 
 use rgb::RGB;
 
-#[derive(Debug)]
+#[derive(Clone, Copy, Debug, PartialEq)]
 pub enum FlexDirection {
     Row,
     Column,
