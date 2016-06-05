@@ -20,14 +20,14 @@ Given a tree:
     ]));
 ```
 
-It outputs a `Vec<Layout>`
+It outputs a `Vec<Command>`
 
 ```rust
-    Layout { bg: RGB { r: 0, g: 0, b: 0 }, fg: RGB { r: 0, g: 0, b: 0 }, rect: Rect { left: 0, top: 0, width: 800, height: 600 } }
-    Layout { bg: RGB { r: 255, g: 0, b: 0 }, fg: RGB { r: 0, g: 0, b: 0 }, rect: Rect { left: 0, top: 0, width: 50, height: 100 } }
-    Layout { bg: RGB { r: 0, g: 255, b: 0 }, fg: RGB { r: 0, g: 0, b: 0 }, rect: Rect { left: 0, top: 100, width: 50, height: 100 } }
-    Layout { bg: RGB { r: 0, g: 125, b: 125 }, fg: RGB { r: 0, g: 0, b: 0 }, rect: Rect { left: 0, top: 100, width: 15, height: 50 } }
-    Layout { bg: RGB { r: 125, g: 125, b: 0 }, fg: RGB { r: 0, g: 0, b: 0 }, rect: Rect { left: 15, top: 100, width: 15, height: 50 } }
+    Command { bg: RGB { r: 0, g: 0, b: 0 }, fg: RGB { r: 0, g: 0, b: 0 }, rect: Rect { left: 0, top: 0, width: 800, height: 600 } }
+    Command { bg: RGB { r: 255, g: 0, b: 0 }, fg: RGB { r: 0, g: 0, b: 0 }, rect: Rect { left: 0, top: 0, width: 50, height: 100 } }
+    Command { bg: RGB { r: 0, g: 255, b: 0 }, fg: RGB { r: 0, g: 0, b: 0 }, rect: Rect { left: 0, top: 100, width: 50, height: 100 } }
+    Command { bg: RGB { r: 0, g: 125, b: 125 }, fg: RGB { r: 0, g: 0, b: 0 }, rect: Rect { left: 0, top: 100, width: 15, height: 50 } }
+    Command { bg: RGB { r: 125, g: 125, b: 0 }, fg: RGB { r: 0, g: 0, b: 0 }, rect: Rect { left: 15, top: 100, width: 15, height: 50 } }
 ```
 
 Suitable for input into a user-supplied `Renderer` implementing the `Render` trait. A simple SDL2 renderer

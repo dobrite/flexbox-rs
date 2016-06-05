@@ -3,7 +3,7 @@ extern crate flexbox;
 
 use flexbox::*;
 
-fn debug_layout(layout: &[Layout]) {
+fn debug_layout(layout: &[Command]) {
     for l in layout {
         println!("{:?}", l)
     }

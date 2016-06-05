@@ -6,15 +6,15 @@ use rgb::RGB;
 use style;
 
 #[derive(Debug)]
-pub struct Layout {
+pub struct Command {
     pub bg: RGB<u8>,
     pub fg: RGB<u8>,
     pub rect: Rect,
 }
 
-impl Layout {
+impl Command {
     pub fn new(bg: RGB<u8>, fg: RGB<u8>, rect: Rect) -> Self {
-        Layout {
+        Command {
             bg: bg,
             fg: fg,
             rect: rect,
@@ -55,23 +55,23 @@ impl Layout {
 ///   </div>
 /// </body>
 
-pub fn layout<'a>(width: u32, height: u32, r: &Renderable<'a>) -> Vec<Layout> {
+pub fn layout<'a>(width: u32, height: u32, r: &Renderable<'a>) -> Vec<Command> {
     recurse(r, Cursor::new(width, height)).0
 }
 
 // TODO some sort of From or Into would be nice to not have to wrap everythign in the enum
 // TODO pass vec down and back up. right now we're allocating a bunch
-fn recurse<'a>(r: &Renderable<'a>, mut cursor: Cursor) -> (Vec<Layout>, Cursor) {
+fn recurse<'a>(r: &Renderable<'a>, mut cursor: Cursor) -> (Vec<Command>, Cursor) {
     let mut v = vec![];
 
     match r {
         &Renderable::View(ref view) => {
-            v.push(Layout::new(view.style.bg.unwrap_or(cursor.bg),
-                               view.style.fg.unwrap_or(cursor.fg),
-                               Rect::new(cursor.x as i32,
-                                         cursor.y as i32,
-                                         view.style.width.unwrap_or(cursor.width),
-                                         view.style.height.unwrap_or(cursor.height))));
+            v.push(Command::new(view.style.bg.unwrap_or(cursor.bg),
+                                view.style.fg.unwrap_or(cursor.fg),
+                                Rect::new(cursor.x as i32,
+                                          cursor.y as i32,
+                                          view.style.width.unwrap_or(cursor.width),
+                                          view.style.height.unwrap_or(cursor.height))));
 
             let mut parent_cursor = cursor;
             parent_cursor.flex_direction = view.style.flex_direction;

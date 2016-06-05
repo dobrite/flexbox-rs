@@ -5,7 +5,7 @@ pub extern crate sdl2_ttf;
 
 use std::path::Path;
 
-use layout::Layout;
+use layout::Command;
 use render::Render;
 use rect::Rect;
 use rgb::RGB;
@@ -35,7 +35,7 @@ impl<'a> Renderer<'a> {
 }
 
 impl<'a> Render for Renderer<'a> {
-    fn render(&mut self, layout: &[Layout]) {
+    fn render(&mut self, layout: &[Command]) {
         self.renderer.set_draw_color(sdl2::pixels::Color::RGB(0, 0, 0));
         self.renderer.clear();
 

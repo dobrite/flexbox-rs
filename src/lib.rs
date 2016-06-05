@@ -2,7 +2,7 @@
 #[cfg(feature = "sdl2")]
 pub use backend::sdl2_backend;
 
-pub use layout::{layout, Layout};
+pub use layout::{layout, Command};
 pub use rect::Rect;
 pub use render::Render;
 pub use renderable::Renderable;
