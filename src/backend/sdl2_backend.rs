@@ -5,7 +5,7 @@ pub extern crate sdl2_ttf;
 
 use std::path::Path;
 
-use layout::Command;
+use command::Command;
 use render::Render;
 use rect::Rect;
 use rgb::RGB;
