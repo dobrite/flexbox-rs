@@ -2,7 +2,7 @@
 use view;
 
 #[allow(dead_code)]
-pub enum Renderable<'a> {
-    View(view::View<'a>),
-    Text(&'a str),
+pub enum Renderable<'r> {
+    View(view::View<'r>),
+    Text(&'r str),
 }

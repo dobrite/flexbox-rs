@@ -55,13 +55,13 @@ impl Command {
 ///   </div>
 /// </body>
 
-pub fn layout<'a>(width: u32, height: u32, r: &Renderable<'a>) -> Vec<Command> {
+pub fn layout<'r>(width: u32, height: u32, r: &Renderable<'r>) -> Vec<Command> {
     recurse(r, Cursor::new(width, height)).0
 }
 
 // TODO some sort of From or Into would be nice to not have to wrap everythign in the enum
 // TODO pass vec down and back up. right now we're allocating a bunch
-fn recurse<'a>(r: &Renderable<'a>, mut cursor: Cursor) -> (Vec<Command>, Cursor) {
+fn recurse<'r>(r: &Renderable<'r>, mut cursor: Cursor) -> (Vec<Command>, Cursor) {
     let mut v = vec![];
 
     match r {

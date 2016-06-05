@@ -12,14 +12,14 @@ use rgb::RGB;
 
 // TODO fg should determine font color
 
-pub struct Renderer<'a> {
-    renderer: sdl2::render::Renderer<'a>,
+pub struct Renderer<'r> {
+    renderer: sdl2::render::Renderer<'r>,
     ttf_context: sdl2_ttf::Sdl2TtfContext,
     font: sdl2_ttf::Font,
 }
 
-impl<'a> Renderer<'a> {
-    pub fn new(renderer: sdl2::render::Renderer<'a>,
+impl<'r> Renderer<'r> {
+    pub fn new(renderer: sdl2::render::Renderer<'r>,
                ttf_context: sdl2_ttf::Sdl2TtfContext,
                font_path: &Path)
                -> Self {
@@ -34,7 +34,7 @@ impl<'a> Renderer<'a> {
     }
 }
 
-impl<'a> Render for Renderer<'a> {
+impl<'r> Render for Renderer<'r> {
     fn render(&mut self, layout: &[Command]) {
         self.renderer.set_draw_color(sdl2::pixels::Color::RGB(0, 0, 0));
         self.renderer.clear();

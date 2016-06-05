@@ -2,13 +2,13 @@
 use Renderable;
 use style::Style;
 
-pub struct View<'a> {
+pub struct View<'r> {
     pub style: Style,
-    pub children: Vec<Renderable<'a>>,
+    pub children: Vec<Renderable<'r>>,
 }
 
-impl<'a> View<'a> {
-    pub fn new(style: Style, children: Vec<Renderable<'a>>) -> Self {
+impl<'r> View<'r> {
+    pub fn new(style: Style, children: Vec<Renderable<'r>>) -> Self {
         View {
             style: style,
             children: children,
