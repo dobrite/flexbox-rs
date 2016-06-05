@@ -24,7 +24,7 @@ impl<'a> Renderer<'a> {
                font_path: &Path)
                -> Self {
 
-        let font = ttf_context.load_font(font_path, 24).unwrap();
+        let font = ttf_context.load_font(font_path, 16).unwrap();
 
         Renderer {
             renderer: renderer,
@@ -45,7 +45,7 @@ impl<'a> Render for Renderer<'a> {
         }
 
         let surface = self.font
-            .render("Hello Rust!")
+            .render("Stuffs")
             .blended(sdl2::pixels::Color::RGBA(255, 0, 0, 255))
             .expect("blah");
 
