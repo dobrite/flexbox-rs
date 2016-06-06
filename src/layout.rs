@@ -15,12 +15,12 @@ use style;
 ///   </div>
 /// </body>
 
-pub struct Layout<'m, 'r: 'm> {
-    measure: &'m (measure::Measure<'r> + 'm),
+pub struct Layout<'m> {
+    measure: &'m measure::Measure,
 }
 
-impl<'m, 'r> Layout<'m, 'r> {
-    pub fn new(measure: &'m measure::Measure<'r>) -> Self {
+impl<'m, 'r> Layout<'m> {
+    pub fn new(measure: &'m measure::Measure) -> Self {
         Layout { measure: measure }
     }
 

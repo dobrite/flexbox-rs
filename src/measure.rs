@@ -15,6 +15,6 @@ impl Dim {
     }
 }
 
-pub trait Measure<'r> {
-    fn get_dim(&self, r: &renderable::Renderable<'r>) -> Dim;
+pub trait Measure {
+    fn get_dim(&self, r: &str) -> Dim;
 }

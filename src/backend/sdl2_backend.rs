@@ -69,12 +69,9 @@ impl<'f> Measurer<'f> {
     }
 }
 
-impl<'f, 'r> measure::Measure<'r> for Measurer<'f> {
-    fn get_dim(&self, r: &renderable::Renderable<'r>) -> measure::Dim {
-        match r {
-            &renderable::Renderable::View(ref view) => measure::Dim::new(0, 0), // TODO
-            &renderable::Renderable::Text(ref text) => measure::Dim::new(10, 10), // TODO
-        }
+impl<'f> measure::Measure for Measurer<'f> {
+    fn get_dim(&self, s: &str) -> measure::Dim {
+        measure::Dim::new(0, 0) // TODO
     }
 }
 
