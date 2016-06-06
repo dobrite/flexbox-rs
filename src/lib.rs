@@ -3,17 +3,20 @@
 pub use backend::sdl2_backend;
 
 pub use command::Command;
-pub use layout::layout;
+pub use layout::Layout;
+pub use measure::{Dim, Measure};
 pub use rect::Rect;
 pub use render::Render;
 pub use renderable::Renderable;
 pub use rgb::RGB;
 pub use style::{FlexDirection, Style};
+pub use text::Text;
 pub use view::View;
 
 mod command;
 mod cursor;
 mod layout;
+mod measure;
 mod rect;
 mod renderable;
 mod rgb;

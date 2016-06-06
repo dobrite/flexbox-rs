@@ -9,12 +9,26 @@ fn debug_layout(layout: &[Command]) {
     }
 }
 
+struct MockMeasure {
+    width: u32,
+    height: u32,
+}
+
+impl<'r> Measure<'r> for MockMeasure {
+    fn get_dim(&self, r: &Renderable<'r>) -> Dim {
+        match r {
+            &Renderable::View(ref view) => Dim::new(self.width, self.height),
+            &Renderable::Text(ref text) => Dim::new(self.width, self.height),
+        }
+    }
+}
+
 #[test]
 fn it_sets_root_width_to_width_with_default_height_no_children() {
     let width = 800u32;
     let height = 0u32;
     let root = Renderable::View(View::new(Style::new(), vec![]));
-    let layout = layout(width, height, &root);
+    let layout = Layout::new(&MockMeasure { width: 0, height: 0 }).layout(width, height, &root);
     let root = &layout[0];
     assert!(layout.len() == 1);
     assert_eq!(800, root.width());
@@ -25,7 +39,7 @@ fn it_sets_root_height_to_0_with_default_height_no_children() {
     let width = 800u32;
     let height = 0u32;
     let root = Renderable::View(View::new(Style::new(), vec![]));
-    let layout = layout(width, height, &root);
+    let layout = Layout::new(&MockMeasure { width: 0, height: 0 }).layout(width, height, &root);
     let root = &layout[0];
     assert!(layout.len() == 1);
     assert_eq!(0, root.height());
@@ -36,7 +50,7 @@ fn it_sets_root_bg_to_white_no_children() {
     let width = 800u32;
     let height = 600u32;
     let root = Renderable::View(View::new(Style::new(), vec![]));
-    let layout = layout(width, height, &root);
+    let layout = Layout::new(&MockMeasure { width: 0, height: 0 }).layout(width, height, &root);
     let root = &layout[0];
     assert!(layout.len() == 1);
     assert_eq!(RGB::new(255, 255, 255), root.bg());
@@ -47,7 +61,7 @@ fn it_sets_root_fg_to_black_no_children() {
     let width = 800u32;
     let height = 600u32;
     let root = Renderable::View(View::new(Style::new(), vec![]));
-    let layout = layout(width, height, &root);
+    let layout = Layout::new(&MockMeasure { width: 0, height: 0 }).layout(width, height, &root);
     let root = &layout[0];
     assert!(layout.len() == 1);
     assert_eq!(RGB::new(0, 0, 0), root.fg());
@@ -58,7 +72,7 @@ fn it_sets_root_width_to_800_with_no_children() {
     let width = 800u32;
     let height = 100u32;
     let root = Renderable::View(View::new(Style::new(), vec![]));
-    let layout = layout(width, height, &root);
+    let layout = Layout::new(&MockMeasure { width: 0, height: 0 }).layout(width, height, &root);
     let root = &layout[0];
     assert!(layout.len() == 1);
     assert_eq!(800, root.width());
@@ -69,7 +83,7 @@ fn it_sets_root_height_to_100_with_no_children() {
     let width = 800u32;
     let height = 100u32;
     let root = Renderable::View(View::new(Style::new(), vec![]));
-    let layout = layout(width, height, &root);
+    let layout = Layout::new(&MockMeasure { width: 0, height: 0 }).layout(width, height, &root);
     let root = &layout[0];
     assert!(layout.len() == 1);
     assert_eq!(100, root.height());
@@ -84,7 +98,7 @@ fn it_sets_child_dim_with_no_child_height() {
                                           vec![
         Renderable::View(View::new(Style::new().with_width(child_width), vec![])),
     ]));
-    let layout = layout(width, height, &root);
+    let layout = Layout::new(&MockMeasure { width: 0, height: 0 }).layout(width, height, &root);
     let child = &layout[1];
     assert!(layout.len() == 2);
     assert_eq!(child_width, child.width());
@@ -100,7 +114,7 @@ fn it_sets_child_dim_with_no_child_width() {
                                           vec![
         Renderable::View(View::new(Style::new().with_height(child_height), vec![])),
     ]));
-    let layout = layout(width, height, &root);
+    let layout = Layout::new(&MockMeasure { width: 0, height: 0 }).layout(width, height, &root);
     let child = &layout[1];
     assert!(layout.len() == 2);
     assert_eq!(child_height, child.height());
@@ -117,7 +131,7 @@ fn it_sets_single_child_dim() {
                                           vec![
         Renderable::View(View::new(Style::new().with_height(child_height).with_width(child_width), vec![])),
     ]));
-    let layout = layout(width, height, &root);
+    let layout = Layout::new(&MockMeasure { width: 0, height: 0 }).layout(width, height, &root);
     let child = &layout[1];
     assert!(layout.len() == 2);
     assert_eq!(child_height, child.height());
@@ -137,7 +151,7 @@ fn it_sets_two_child_rect_row() {
         Renderable::View(View::new(Style::new().with_height(children_height).with_width(children_width), vec![])),
     ]));
 
-    let layout = layout(width, height, &root);
+    let layout = Layout::new(&MockMeasure { width: 0, height: 0 }).layout(width, height, &root);
     assert!(layout.len() == 3);
 
     let mut child = &layout[1];
@@ -166,7 +180,7 @@ fn it_sets_two_child_rect_column() {
         Renderable::View(View::new(Style::new().with_height(children_height).with_width(children_width), vec![])),
     ]));
 
-    let layout = layout(width, height, &root);
+    let layout = Layout::new(&MockMeasure { width: 0, height: 0 }).layout(width, height, &root);
     assert!(layout.len() == 3);
 
     let mut child = &layout[1];
@@ -196,8 +210,7 @@ fn it_sets_two_child_two_child_rect_column() {
         ])),
     ]));
 
-
-    let layout = layout(width, height, &root);
+    let layout = Layout::new(&MockMeasure { width: 0, height: 0 }).layout(width, height, &root);
     debug_layout(&layout);
     assert!(layout.len() == 5);
 

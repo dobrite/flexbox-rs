@@ -6,35 +6,29 @@ pub extern crate sdl2_ttf;
 use std::path::Path;
 
 use command::Command;
-use render::Render;
+use measure;
 use rect::Rect;
+use render::Render;
+use renderable;
 use rgb::RGB;
 
 // TODO fg should determine font color
 
-pub struct Renderer<'r> {
+pub struct Renderer<'f, 'r> {
     renderer: sdl2::render::Renderer<'r>,
-    ttf_context: sdl2_ttf::Sdl2TtfContext,
-    font: sdl2_ttf::Font,
+    font: &'f sdl2_ttf::Font,
 }
 
-impl<'r> Renderer<'r> {
-    pub fn new(renderer: sdl2::render::Renderer<'r>,
-               ttf_context: sdl2_ttf::Sdl2TtfContext,
-               font_path: &Path)
-               -> Self {
-
-        let font = ttf_context.load_font(font_path, 16).unwrap();
-
+impl<'f, 'r> Renderer<'f, 'r> {
+    pub fn new(renderer: sdl2::render::Renderer<'r>, font: &'f sdl2_ttf::Font) -> Self {
         Renderer {
             renderer: renderer,
-            ttf_context: ttf_context,
             font: font,
         }
     }
 }
 
-impl<'r> Render for Renderer<'r> {
+impl<'f, 'r> Render for Renderer<'f, 'r> {
     fn render(&mut self, layout: &[Command]) {
         self.renderer.set_draw_color(sdl2::pixels::Color::RGB(0, 0, 0));
         self.renderer.clear();
@@ -58,6 +52,29 @@ impl<'r> Render for Renderer<'r> {
                            Some(sdl2::rect::Rect::new(100, 100, width, height)));
 
         self.renderer.present();
+    }
+}
+
+pub struct Measurer<'f> {
+    ttf_context: sdl2_ttf::Sdl2TtfContext,
+    font: &'f sdl2_ttf::Font,
+}
+
+impl<'f> Measurer<'f> {
+    pub fn new(ttf_context: sdl2_ttf::Sdl2TtfContext, font: &'f sdl2_ttf::Font) -> Self {
+        Measurer {
+            ttf_context: ttf_context,
+            font: font,
+        }
+    }
+}
+
+impl<'f, 'r> measure::Measure<'r> for Measurer<'f> {
+    fn get_dim(&self, r: &renderable::Renderable<'r>) -> measure::Dim {
+        match r {
+            &renderable::Renderable::View(ref view) => measure::Dim::new(0, 0), // TODO
+            &renderable::Renderable::Text(ref text) => measure::Dim::new(10, 10), // TODO
+        }
     }
 }
 

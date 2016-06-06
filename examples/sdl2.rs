@@ -7,7 +7,7 @@ mod sdl2_utils;
 use std::path::Path;
 
 use sdl2_utils::Events;
-use flexbox::{layout, FlexDirection, Renderable, RGB, Style, View, Render, sdl2_backend};
+use flexbox::{Layout, FlexDirection, Renderable, RGB, Style, View, Render, sdl2_backend};
 
 fn main() {
     let sdl_context = sdl2::init().unwrap();
@@ -38,7 +38,10 @@ fn main() {
         ])),
     ]));
 
-    let mut renderer = sdl2_backend::Renderer::new(sdl2_renderer, ttf_context, Path::new("./examples/assets/fonts/Monospace.ttf"));
+    let font = ttf_context.load_font(Path::new("./examples/assets/fonts/Monospace.ttf"), 16).unwrap();
+    let mut renderer = sdl2_backend::Renderer::new(sdl2_renderer, &font);
+    let measurer = sdl2_backend::Measurer::new(ttf_context, &font);
+    let layout = Layout::new(&measurer);
 
     loop {
         events.pump();
@@ -47,6 +50,6 @@ fn main() {
             break;
         }
 
-        renderer.render(&layout(width, height, &root));
+        renderer.render(&layout.layout(width, height, &root));
     }
 }
