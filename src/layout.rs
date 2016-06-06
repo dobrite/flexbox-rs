@@ -64,12 +64,10 @@ impl<'m, 'r> Layout<'m> {
                 }
             }
             &Renderable::Text(ref text) => {
+                let measure::Dim { width, height } = self.measure.get_dim(text.children);
                 v.push(Command::new(text.style.bg.unwrap_or(cursor.bg),
                                     text.style.fg.unwrap_or(cursor.fg),
-                                    Rect::new(cursor.x as i32,
-                                              cursor.y as i32,
-                                              text.style.width.unwrap_or(cursor.width),
-                                              text.style.height.unwrap_or(cursor.height))));
+                                    Rect::new(cursor.x as i32, cursor.y as i32, width, height)));
             }
         }
 

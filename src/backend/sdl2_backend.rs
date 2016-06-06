@@ -3,13 +3,10 @@
 pub extern crate sdl2;
 pub extern crate sdl2_ttf;
 
-use std::path::Path;
-
 use command::Command;
 use measure;
 use rect::Rect;
 use render::Render;
-use renderable;
 use rgb::RGB;
 
 // TODO fg should determine font color
@@ -55,6 +52,7 @@ impl<'f, 'r> Render for Renderer<'f, 'r> {
     }
 }
 
+#[allow(dead_code)]
 pub struct Measurer<'f> {
     ttf_context: sdl2_ttf::Sdl2TtfContext,
     font: &'f sdl2_ttf::Font,
@@ -71,7 +69,8 @@ impl<'f> Measurer<'f> {
 
 impl<'f> measure::Measure for Measurer<'f> {
     fn get_dim(&self, s: &str) -> measure::Dim {
-        measure::Dim::new(0, 0) // TODO
+        let (width, height) = self.font.size_of_latin1(s.as_bytes()).unwrap();
+        measure::Dim::new(width, height)
     }
 }
 
@@ -81,4 +80,23 @@ fn to_sdl2_color(c: RGB<u8>) -> sdl2::pixels::Color {
 
 fn to_sdl2_rect(r: Rect) -> sdl2::rect::Rect {
     sdl2::rect::Rect::new(r.left, r.top, r.width, r.height)
+}
+
+#[cfg(test)]
+mod tests {
+    extern crate sdl2_ttf;
+
+    use std::path::Path;
+    use super::Measurer;
+    use Measure;
+
+    #[test]
+    fn it_measures() {
+        let ttf_context = sdl2_ttf::init().unwrap();
+        let path = Path::new("./examples/assets/fonts/Monospace.ttf");
+        let font = ttf_context.load_font(path, 16).unwrap();
+        let dim = Measurer::new(ttf_context, &font).get_dim("yo dawg!");
+        assert_eq!(79, dim.width);
+        assert_eq!(17, dim.height);
+    }
 }

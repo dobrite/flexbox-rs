@@ -23,7 +23,7 @@ fn main() {
         .build()
         .unwrap();
 
-    let mut sdl2_renderer = window.renderer()
+    let sdl2_renderer = window.renderer()
         .accelerated()
         .build()
         .unwrap();

@@ -9,17 +9,15 @@ fn debug_layout(layout: &[Command]) {
     }
 }
 
+// TODO remove width and height if you ain't gonna us them
 struct MockMeasure {
     width: u32,
     height: u32,
 }
 
-impl<'r> Measure<'r> for MockMeasure {
-    fn get_dim(&self, r: &Renderable<'r>) -> Dim {
-        match r {
-            &Renderable::View(ref view) => Dim::new(self.width, self.height),
-            &Renderable::Text(ref text) => Dim::new(self.width, self.height),
-        }
+impl Measure for MockMeasure {
+    fn get_dim(&self, s: &str) -> Dim {
+        Dim::new(s.as_bytes().len() as u32, 0)
     }
 }
 
@@ -237,4 +235,15 @@ fn it_sets_two_child_two_child_rect_column() {
     assert_eq!(15, child.width());
     assert_eq!(100, child.top());
     assert_eq!(15, child.left());
+}
+
+#[test]
+fn it_sets_root_width_to_width_text_with_default_height_no_children() {
+    let width = 800u32;
+    let height = 0u32;
+    let root = Renderable::Text(Text::new(Style::new(), "blah"));
+    let layout = Layout::new(&MockMeasure { width: 0, height: 0 }).layout(width, height, &root);
+    assert!(layout.len() == 1);
+    let root = &layout[0];
+    assert_eq!(4, root.width());
 }
