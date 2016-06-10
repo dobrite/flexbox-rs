@@ -250,3 +250,15 @@ fn it_sets_root_width_to_width_text_with_default_height_no_children() {
     let root = &layout[1];
     assert_eq!(4, root.width());
 }
+
+#[test]
+fn it_sets_root_height_to_0_text_with_0_height_no_children() {
+    let root = Root::new(Style::new().with_width(800).with_height(0), vec![
+        Renderable::Text(Text::new(Style::new(), "blah"))
+    ]);
+
+    let layout = Layout::new(&MockMeasure { width: 0, height: 0 }).layout(&root);
+    assert_eq!(2, layout.len());
+    let root = &layout[1];
+    assert_eq!(0, root.height());
+}
