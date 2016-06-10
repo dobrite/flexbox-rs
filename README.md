@@ -1,23 +1,23 @@
 ### What is this?
 
-Some sort of opinionated minimal implementation of flexbox in Rust.
+Some sort of minimal implementation of flexbox in Rust.
 
 ### What is this not?
 
-Spec compliant layout engine suitable, well, for basically anything.
+Spec compliant flexbox implementation suitable for anything.
 
 ### How does it work?
 
 Given a tree:
 
 ```rust
-    let root = Renderable::View(View::new(Style::new().with_bg(RGB::new(0, 0, 0)).with_flex_direction(FlexDirection::Column), vec![
+    let root = Root::new(800, 600, Renderable::View(View::new(Style::new().with_bg(RGB::new(0, 0, 0)).with_flex_direction(FlexDirection::Column), vec![
         Renderable::View(View::new(Style::new().with_width(50).with_height(100).with_bg(RGB::new(255, 0, 0)), vec![])),
         Renderable::View(View::new(Style::new().with_width(50).with_height(100).with_bg(RGB::new(0, 255, 0)), vec![
             Renderable::View(View::new(Style::new().with_width(15).with_height(50).with_bg(RGB::new(0, 125, 125)), vec![])),
             Renderable::View(View::new(Style::new().with_width(15).with_height(50).with_bg(RGB::new(125, 125, 0)), vec![])),
         ])),
-    ]));
+    ])));
 ```
 
 It outputs a `Vec<Command>`
