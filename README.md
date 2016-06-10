@@ -11,19 +11,22 @@ Spec compliant flexbox implementation suitable for anything.
 Given a tree:
 
 ```rust
-    let root = Root::new(800, 600, Renderable::View(View::new(Style::new().with_bg(RGB::new(0, 0, 0)).with_flex_direction(FlexDirection::Column), vec![
-        Renderable::View(View::new(Style::new().with_width(50).with_height(100).with_bg(RGB::new(255, 0, 0)), vec![])),
-        Renderable::View(View::new(Style::new().with_width(50).with_height(100).with_bg(RGB::new(0, 255, 0)), vec![
-            Renderable::View(View::new(Style::new().with_width(15).with_height(50).with_bg(RGB::new(0, 125, 125)), vec![])),
-            Renderable::View(View::new(Style::new().with_width(15).with_height(50).with_bg(RGB::new(125, 125, 0)), vec![])),
-        ])),
-    ])));
+    let root = Root::new(Style::new().with_width(width).with_height(height).with_bg(RGB::new(0, 0, 0)), vec![
+        Renderable::View(View::new(Style::new().with_bg(RGB::new(0, 0, 0)).with_flex_direction(FlexDirection::Column), vec![
+            Renderable::View(View::new(Style::new().with_width(50).with_height(100).with_bg(RGB::new(255, 0, 0)).with_fg(RGB::new(0, 0, 0)), vec![])),
+            Renderable::View(View::new(Style::new().with_width(50).with_height(100).with_bg(RGB::new(0, 255, 0)).with_fg(RGB::new(0, 0, 0)), vec![
+                Renderable::View(View::new(Style::new().with_width(15).with_height(50).with_bg(RGB::new(0, 125, 125)).with_fg(RGB::new(0, 0, 0)), vec![])),
+                Renderable::View(View::new(Style::new().with_width(15).with_height(50).with_bg(RGB::new(125, 125, 0)).with_fg(RGB::new(0, 0, 0)), vec![])),
+            ])),
+        ]))
+    ]);
 ```
 
 It outputs a `Vec<Command>`
 
 ```rust
     Command { bg: RGB { r: 0, g: 0, b: 0 }, fg: RGB { r: 0, g: 0, b: 0 }, rect: Rect { left: 0, top: 0, width: 800, height: 600 } }
+    Command { bg: RGB { r: 0, g: 0, b: 0 }, fg: RGB { r: 0, g: 0, b: 0 }, rect: Rect { left: 0, top: 0, width: 0, height: 600 } }
     Command { bg: RGB { r: 255, g: 0, b: 0 }, fg: RGB { r: 0, g: 0, b: 0 }, rect: Rect { left: 0, top: 0, width: 50, height: 100 } }
     Command { bg: RGB { r: 0, g: 255, b: 0 }, fg: RGB { r: 0, g: 0, b: 0 }, rect: Rect { left: 0, top: 100, width: 50, height: 100 } }
     Command { bg: RGB { r: 0, g: 125, b: 125 }, fg: RGB { r: 0, g: 0, b: 0 }, rect: Rect { left: 0, top: 100, width: 15, height: 50 } }

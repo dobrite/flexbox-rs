@@ -23,7 +23,10 @@ impl Measure for MockMeasure {
 
 #[test]
 fn it_sets_root_width_to_width_with_default_height_no_children() {
-    let root = Root::new(800, 0, vec![Renderable::View(View::new(Style::new(), vec![]))]);
+    let root = Root::new(Style::new().with_width(800).with_height(0), vec![
+        Renderable::View(View::new(Style::new(), vec![]))
+    ]);
+
     let layout = Layout::new(&MockMeasure { width: 0, height: 0 }).layout(&root);
     let root = &layout[0];
     assert_eq!(2, layout.len());
@@ -32,7 +35,10 @@ fn it_sets_root_width_to_width_with_default_height_no_children() {
 
 #[test]
 fn it_sets_root_height_to_0_with_default_height_no_children() {
-    let root = Root::new(800, 0, vec![Renderable::View(View::new(Style::new(), vec![]))]);
+    let root = Root::new(Style::new().with_width(800).with_height(0), vec![
+        Renderable::View(View::new(Style::new(), vec![]))
+    ]);
+
     let layout = Layout::new(&MockMeasure { width: 0, height: 0 }).layout(&root);
     let root = &layout[0];
     assert_eq!(2, layout.len());
@@ -41,7 +47,10 @@ fn it_sets_root_height_to_0_with_default_height_no_children() {
 
 #[test]
 fn it_sets_root_bg_to_white_no_children() {
-    let root = Root::new(800, 600, vec![Renderable::View(View::new(Style::new(), vec![]))]);
+    let root = Root::new(Style::new().with_width(800).with_height(600), vec![
+        Renderable::View(View::new(Style::new(), vec![]))
+    ]);
+
     let layout = Layout::new(&MockMeasure { width: 0, height: 0 }).layout(&root);
     let root = &layout[0];
     assert_eq!(2, layout.len());
@@ -50,7 +59,10 @@ fn it_sets_root_bg_to_white_no_children() {
 
 #[test]
 fn it_sets_root_fg_to_black_no_children() {
-    let root = Root::new(800, 600, vec![Renderable::View(View::new(Style::new(), vec![]))]);
+    let root = Root::new(Style::new().with_width(800).with_height(600), vec![
+        Renderable::View(View::new(Style::new(), vec![]))
+    ]);
+
     let layout = Layout::new(&MockMeasure { width: 0, height: 0 }).layout(&root);
     let root = &layout[0];
     assert_eq!(2, layout.len());
@@ -59,7 +71,10 @@ fn it_sets_root_fg_to_black_no_children() {
 
 #[test]
 fn it_sets_root_width_to_800_with_no_children() {
-    let root = Root::new(800, 100, vec![Renderable::View(View::new(Style::new(), vec![]))]);
+    let root = Root::new(Style::new().with_width(800).with_height(100), vec![
+        Renderable::View(View::new(Style::new(), vec![]))
+    ]);
+
     let layout = Layout::new(&MockMeasure { width: 0, height: 0 }).layout(&root);
     let root = &layout[0];
     assert_eq!(2, layout.len());
@@ -68,7 +83,10 @@ fn it_sets_root_width_to_800_with_no_children() {
 
 #[test]
 fn it_sets_root_height_to_100_with_no_children() {
-    let root = Root::new(800, 100, vec![Renderable::View(View::new(Style::new(), vec![]))]);
+    let root = Root::new(Style::new().with_width(800).with_height(100), vec![
+        Renderable::View(View::new(Style::new(), vec![]))
+    ]);
+
     let layout = Layout::new(&MockMeasure { width: 0, height: 0 }).layout(&root);
     let root = &layout[0];
     assert_eq!(2, layout.len());
@@ -77,27 +95,28 @@ fn it_sets_root_height_to_100_with_no_children() {
 
 #[test]
 fn it_sets_child_dim_with_no_child_height() {
-    let height = 600;
     let child_width = 50u32;
-    let root = Root::new(800, height, vec![Renderable::View(View::new(Style::new(),
-                                          vec![
-        Renderable::View(View::new(Style::new().with_width(child_width), vec![])),
-    ]))]);
+    let root = Root::new(Style::new().with_width(800).with_height(600), vec![
+        Renderable::View(View::new(Style::new(), vec![
+            Renderable::View(View::new(Style::new().with_width(child_width), vec![])),
+        ]))
+    ]);
 
     let layout = Layout::new(&MockMeasure { width: 0, height: 0 }).layout(&root);
     let child = &layout[2];
     assert_eq!(3, layout.len());
     assert_eq!(child_width, child.width());
-    assert_eq!(height, child.height());
+    assert_eq!(600, child.height());
 }
 
 #[test]
 fn it_sets_child_dim_with_no_child_width() {
     let child_height = 100u32;
-    let root = Root::new(800, 600, vec![Renderable::View(View::new(Style::new(),
-                                          vec![
-        Renderable::View(View::new(Style::new().with_height(child_height), vec![])),
-    ]))]);
+    let root = Root::new(Style::new().with_width(800).with_height(600), vec![
+        Renderable::View(View::new(Style::new(), vec![
+            Renderable::View(View::new(Style::new().with_height(child_height), vec![])),
+        ]))
+    ]);
 
     let layout = Layout::new(&MockMeasure { width: 0, height: 0 }).layout(&root);
     let child = &layout[2];
@@ -110,10 +129,11 @@ fn it_sets_child_dim_with_no_child_width() {
 fn it_sets_single_child_dim() {
     let child_width = 50u32;
     let child_height = 100u32;
-    let root = Root::new(800, 600, vec![Renderable::View(View::new(Style::new(),
-                                          vec![
-        Renderable::View(View::new(Style::new().with_height(child_height).with_width(child_width), vec![])),
-    ]))]);
+    let root = Root::new(Style::new().with_width(800).with_height(600), vec![
+        Renderable::View(View::new(Style::new(), vec![
+            Renderable::View(View::new(Style::new().with_height(child_height).with_width(child_width), vec![])),
+        ]))
+    ]);
 
     let layout = Layout::new(&MockMeasure { width: 0, height: 0 }).layout(&root);
     let child = &layout[2];
@@ -127,11 +147,12 @@ fn it_sets_two_child_rect_row() {
     let children_width = 50u32;
     let children_height = 100u32;
 
-    let root = Root::new(800, 600, vec![Renderable::View(View::new(Style::new(),
-                                          vec![
-        Renderable::View(View::new(Style::new().with_height(children_height).with_width(children_width), vec![])),
-        Renderable::View(View::new(Style::new().with_height(children_height).with_width(children_width), vec![])),
-    ]))]);
+    let root = Root::new(Style::new().with_width(800).with_height(600), vec![
+        Renderable::View(View::new(Style::new(), vec![
+            Renderable::View(View::new(Style::new().with_height(children_height).with_width(children_width), vec![])),
+            Renderable::View(View::new(Style::new().with_height(children_height).with_width(children_width), vec![])),
+        ]))
+    ]);
 
     let layout = Layout::new(&MockMeasure { width: 0, height: 0 }).layout(&root);
     assert_eq!(4, layout.len());
@@ -154,11 +175,12 @@ fn it_sets_two_child_rect_column() {
     let children_width = 50u32;
     let children_height = 100u32;
 
-    let root = Root::new(800, 600, vec![Renderable::View(View::new(Style::new().with_flex_direction(FlexDirection::Column),
-                                          vec![
-        Renderable::View(View::new(Style::new().with_height(children_height).with_width(children_width), vec![])),
-        Renderable::View(View::new(Style::new().with_height(children_height).with_width(children_width), vec![])),
-    ]))]);
+    let root = Root::new(Style::new().with_width(800).with_height(600), vec![
+        Renderable::View(View::new(Style::new().with_flex_direction(FlexDirection::Column), vec![
+            Renderable::View(View::new(Style::new().with_height(children_height).with_width(children_width), vec![])),
+            Renderable::View(View::new(Style::new().with_height(children_height).with_width(children_width), vec![])),
+        ]))
+    ]);
 
     let layout = Layout::new(&MockMeasure { width: 0, height: 0 }).layout(&root);
     assert_eq!(4, layout.len());
@@ -178,14 +200,15 @@ fn it_sets_two_child_rect_column() {
 
 #[test]
 fn it_sets_two_child_two_child_rect_column() {
-    let root = Root::new(800, 600, vec![Renderable::View(View::new(Style::new().with_flex_direction(FlexDirection::Column),
-                                          vec![
-        Renderable::View(View::new(Style::new().with_height(100).with_width(50), vec![])),
-        Renderable::View(View::new(Style::new().with_height(100).with_width(50), vec![
-            Renderable::View(View::new(Style::new().with_height(25).with_width(15), vec![])),
-            Renderable::View(View::new(Style::new().with_height(25).with_width(15), vec![])),
-        ])),
-    ]))]);
+    let root = Root::new(Style::new().with_width(800).with_height(600), vec![
+        Renderable::View(View::new(Style::new().with_flex_direction(FlexDirection::Column), vec![
+            Renderable::View(View::new(Style::new().with_height(100).with_width(50), vec![])),
+            Renderable::View(View::new(Style::new().with_height(100).with_width(50), vec![
+                Renderable::View(View::new(Style::new().with_height(25).with_width(15), vec![])),
+                Renderable::View(View::new(Style::new().with_height(25).with_width(15), vec![])),
+            ])),
+        ]))
+    ]);
 
     let layout = Layout::new(&MockMeasure { width: 0, height: 0 }).layout(&root);
     debug_layout(&layout);
@@ -218,7 +241,10 @@ fn it_sets_two_child_two_child_rect_column() {
 
 #[test]
 fn it_sets_root_width_to_width_text_with_default_height_no_children() {
-    let root = Root::new(800, 0, vec![Renderable::Text(Text::new(Style::new(), "blah"))]);
+    let root = Root::new(Style::new().with_width(800).with_height(0), vec![
+        Renderable::Text(Text::new(Style::new(), "blah"))
+    ]);
+
     let layout = Layout::new(&MockMeasure { width: 0, height: 0 }).layout(&root);
     assert_eq!(2, layout.len());
     let root = &layout[1];

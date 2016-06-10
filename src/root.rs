@@ -1,6 +1,6 @@
 
 use renderable::Renderable;
-use style::Style;
+use style;
 use view::View;
 
 /// conceptually equal to root returning a body tag with fixed width height e.g:
@@ -17,12 +17,10 @@ pub struct Root<'r> {
 }
 
 impl<'r> Root<'r> {
-    pub fn new(width: u32, height: u32, children: Vec<Renderable<'r>>) -> Self {
-        let style = Style::new().with_width(width).with_height(height);
-
+    pub fn new(style: style::Style, children: Vec<Renderable<'r>>) -> Self {
         Root {
-            width: width,
-            height: height,
+            width: style.width.expect("must pass width"),
+            height: style.height.expect("must pass height"),
             root: Renderable::View(View::new(style, children)),
         }
     }
