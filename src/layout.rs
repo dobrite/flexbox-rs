@@ -4,16 +4,8 @@ use cursor::Cursor;
 use measure;
 use rect::Rect;
 use renderable::Renderable;
+use root;
 use style;
-
-/// all views come with `display: flex` by default.
-
-/// width, height reps div child inside body with w/h set.
-/// i.e.
-/// <body>
-///   <div style="width: 800px; height: 600px;">
-///   </div>
-/// </body>
 
 pub struct Layout<'m> {
     measure: &'m measure::Measure,
@@ -24,8 +16,9 @@ impl<'m, 'r> Layout<'m> {
         Layout { measure: measure }
     }
 
-    pub fn layout(&self, width: u32, height: u32, r: &Renderable<'r>) -> Vec<Command> {
-        self.recurse(r, Cursor::new(width, height)).0
+    pub fn layout(&self, root: &root::Root<'r>) -> Vec<Command> {
+        let cursor = Cursor::new(root.width, root.height);
+        self.recurse(root.root(), cursor).0
     }
 
     // TODO some sort of From or Into would be nice to not have to wrap everythign in the enum
