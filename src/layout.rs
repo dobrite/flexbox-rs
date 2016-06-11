@@ -16,20 +16,21 @@ impl<'m, 'r> Layout<'m> {
         Layout { measure: measure }
     }
 
-    pub fn layout(&self, root: &root::Root<'r>) -> Vec<Command> {
+    pub fn layout(&'r self, root: &root::Root<'r>) -> Vec<Command> {
         let cursor = Cursor::new(root.width, root.height);
         self.recurse(root.root(), cursor).0
     }
 
     // TODO some sort of From or Into would be nice to not have to wrap everythign in the enum
     // TODO pass vec down and back up. right now we're allocating a bunch
-    fn recurse(&self, r: &Renderable<'r>, mut cursor: Cursor) -> (Vec<Command>, Cursor) {
+    fn recurse(&'r self, r: &Renderable<'r>, mut cursor: Cursor) -> (Vec<Command>, Cursor) {
         let mut v = vec![];
 
         match r {
             &Renderable::View(ref view) => {
                 v.push(Command::new(view.style.bg.unwrap_or(cursor.bg),
                                     view.style.fg.unwrap_or(cursor.fg),
+                                    None,
                                     Rect::new(cursor.x as i32,
                                               cursor.y as i32,
                                               view.style.width.unwrap_or(cursor.width),
@@ -60,7 +61,9 @@ impl<'m, 'r> Layout<'m> {
                 let measure::Dim { width, height } = self.measure.get_dim(text.children);
                 v.push(Command::new(text.style.bg.unwrap_or(cursor.bg),
                                     text.style.fg.unwrap_or(cursor.fg),
+                                    Some(text.children),
                                     Rect::new(cursor.x as i32, cursor.y as i32, width, height)));
+                cursor.x += width;
             }
         }
 

@@ -3,17 +3,19 @@ use rect::Rect;
 use rgb::RGB;
 
 #[derive(Debug)]
-pub struct Command {
+pub struct Command<'s> {
     pub bg: RGB<u8>,
     pub fg: RGB<u8>,
+    pub text: Option<&'s str>,
     pub rect: Rect,
 }
 
-impl Command {
-    pub fn new(bg: RGB<u8>, fg: RGB<u8>, rect: Rect) -> Self {
+impl<'s> Command<'s> {
+    pub fn new(bg: RGB<u8>, fg: RGB<u8>, text: Option<&'s str>, rect: Rect) -> Self {
         Command {
             bg: bg,
             fg: fg,
+            text: text,
             rect: rect,
         }
     }

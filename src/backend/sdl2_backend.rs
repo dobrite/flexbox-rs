@@ -33,20 +33,14 @@ impl<'f, 'r> Render for Renderer<'f, 'r> {
         for l in layout {
             self.renderer.set_draw_color(to_sdl2_color(l.bg));
             let _ = self.renderer.fill_rect(to_sdl2_rect(l.rect));
+            if let Some(text) = l.text {
+                let surface = self.font.render(text).blended(to_sdl2_color_a(l.fg)).unwrap();
+                let mut texture = self.renderer.create_texture_from_surface(&surface).unwrap();
+                let sdl2::render::TextureQuery { width, height, .. } = texture.query();
+                let rect = sdl2::rect::Rect::new(l.rect.left, l.rect.top, width, height);
+                self.renderer.copy(&mut texture, None, Some(rect));
+            }
         }
-
-        let surface = self.font
-            .render("Stuffs")
-            .blended(sdl2::pixels::Color::RGBA(255, 0, 0, 255))
-            .expect("blah");
-
-        let mut texture = self.renderer.create_texture_from_surface(&surface).unwrap();
-
-        let sdl2::render::TextureQuery { width, height, .. } = texture.query();
-
-        self.renderer.copy(&mut texture,
-                           None,
-                           Some(sdl2::rect::Rect::new(100, 100, width, height)));
 
         self.renderer.present();
     }
@@ -76,6 +70,10 @@ impl<'f> measure::Measure for Measurer<'f> {
 
 fn to_sdl2_color(c: RGB<u8>) -> sdl2::pixels::Color {
     sdl2::pixels::Color::RGB(c.r, c.g, c.b)
+}
+
+fn to_sdl2_color_a(c: RGB<u8>) -> sdl2::pixels::Color {
+    sdl2::pixels::Color::RGBA(c.r, c.g, c.b, 255)
 }
 
 fn to_sdl2_rect(r: Rect) -> sdl2::rect::Rect {
