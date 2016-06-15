@@ -8,6 +8,7 @@ use measure;
 use rect::Rect;
 use render::Render;
 use rgb::RGB;
+use style;
 
 // TODO fg should determine font color
 
@@ -31,8 +32,14 @@ impl<'f, 'r> Render for Renderer<'f, 'r> {
         self.renderer.clear();
 
         for l in layout {
-            self.renderer.set_draw_color(to_sdl2_color(l.bg));
-            let _ = self.renderer.fill_rect(to_sdl2_rect(l.rect));
+            match l.bg {
+                None => {}
+                Some(bg) => {
+                    self.renderer.set_draw_color(to_sdl2_color(bg));
+                    let _ = self.renderer.fill_rect(to_sdl2_rect(l.rect));
+                }
+            }
+
             if let Some(text) = l.text {
                 let surface = self.font.render(text).blended(to_sdl2_color_a(l.fg)).unwrap();
                 let mut texture = self.renderer.create_texture_from_surface(&surface).unwrap();

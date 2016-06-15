@@ -28,7 +28,7 @@ impl<'m, 'r> Layout<'m> {
 
         match r {
             &Renderable::View(ref view) => {
-                v.push(Command::new(view.style.bg.unwrap_or(cursor.bg),
+                v.push(Command::new(cursor.compute_bg(view.style.bg),
                                     view.style.fg.unwrap_or(cursor.fg),
                                     None,
                                     Rect::new(cursor.x as i32,
@@ -59,7 +59,7 @@ impl<'m, 'r> Layout<'m> {
             }
             &Renderable::Text(ref text) => {
                 let measure::Dim { width, height } = self.measure.get_dim(text.children);
-                v.push(Command::new(text.style.bg.unwrap_or(cursor.bg),
+                v.push(Command::new(cursor.compute_bg(text.style.bg),
                                     text.style.fg.unwrap_or(cursor.fg),
                                     Some(text.children),
                                     Rect::new(cursor.x as i32, cursor.y as i32, width, height)));

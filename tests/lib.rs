@@ -46,20 +46,6 @@ fn it_sets_root_height_to_0_with_default_height_no_children() {
 }
 
 #[test]
-fn it_sets_root_bg_to_white_no_children() {
-    let root = Root::new(Style::new().with_width(800).with_height(600), vec![
-        Renderable::View(View::new(Style::new(), vec![]))
-    ]);
-
-    let mm = MockMeasure;
-    let l = Layout::new(&mm);
-    let layout = l.layout(&root);
-    let root = &layout[0];
-    assert_eq!(2, layout.len());
-    assert_eq!(RGB::new(255, 255, 255), root.bg());
-}
-
-#[test]
 fn it_sets_root_fg_to_black_no_children() {
     let root = Root::new(Style::new().with_width(800).with_height(600), vec![
         Renderable::View(View::new(Style::new(), vec![]))
@@ -301,4 +287,16 @@ fn it_sets_root_width_to_double_width_text_with_two_texts() {
     assert_eq!(4, left.width());
     let right = &layout[2];
     assert_eq!(4, left.width());
+}
+
+#[test]
+fn it_sets_root_background_color_to_transparent() {
+    let root = Root::new(Style::new().with_width(1).with_height(0), vec![]);
+
+    let mm = MockMeasure;
+    let l = Layout::new(&mm);
+    let layout = l.layout(&root);
+    assert_eq!(1, layout.len());
+    let root = &layout[0];
+    assert_eq!(None, root.bg);
 }

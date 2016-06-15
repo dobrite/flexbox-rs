@@ -2,18 +2,7 @@
 use std::default::Default;
 
 use rgb::RGB;
-
-#[derive(Clone, Copy, Debug, PartialEq)]
-pub enum FlexDirection {
-    Row,
-    Column,
-}
-
-impl Default for FlexDirection {
-    fn default() -> FlexDirection {
-        FlexDirection::Row
-    }
-}
+use style;
 
 // border-box: content-box -- border and padding included in height width
 // flexbox
@@ -30,6 +19,7 @@ impl Default for FlexDirection {
 //   padding (bottom, horizontal, vertical, top, right, left)
 //   position ('absolute', 'relative')
 // bg color
+// bg color - transparent
 // border color (top, left, right, bottom)
 // border style (..)
 // border width (..)
@@ -39,6 +29,30 @@ impl Default for FlexDirection {
 // overflow 'visible', 'hidden' (wrap?)
 // elevation (shadows to lower layer)
 
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum FlexDirection {
+    Row,
+    Column,
+}
+
+impl Default for FlexDirection {
+    fn default() -> FlexDirection {
+        FlexDirection::Row
+    }
+}
+
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum BackgroundColor {
+    Color(RGB<u8>),
+    Transparent,
+}
+
+impl Default for BackgroundColor {
+    fn default() -> BackgroundColor {
+        BackgroundColor::Transparent
+    }
+}
+
 // only dim in flex direction applies e.g. row only width, col only height
 #[derive(Debug)]
 pub struct Style {
@@ -46,7 +60,7 @@ pub struct Style {
     pub width: Option<u32>,
     pub height: Option<u32>,
     pub fg: Option<RGB<u8>>,
-    pub bg: Option<RGB<u8>>,
+    pub bg: Option<BackgroundColor>,
     pub flex_direction: FlexDirection,
 }
 
@@ -76,7 +90,7 @@ impl Style {
         self
     }
 
-    pub fn with_bg(mut self, bg: RGB<u8>) -> Self {
+    pub fn with_bg(mut self, bg: style::BackgroundColor) -> Self {
         self.bg = Some(bg);
         self
     }

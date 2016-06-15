@@ -7,7 +7,7 @@ mod sdl2_utils;
 use std::path::Path;
 
 use sdl2_utils::Events;
-use flexbox::{Layout, FlexDirection, Renderable, RGB, Root, Style, View, Render, sdl2_backend};
+use flexbox::{BackgroundColor, Layout, FlexDirection, Renderable, RGB, Root, Style, View, Render, sdl2_backend};
 
 fn main() {
     let sdl_context = sdl2::init().unwrap();
@@ -30,12 +30,13 @@ fn main() {
 
     let mut events = Events::new(sdl_context.event_pump().unwrap());
 
-    let root = Root::new(Style::new().with_width(width).with_height(height).with_bg(RGB::new(0, 0, 0)), vec![
-        Renderable::View(View::new(Style::new().with_bg(RGB::new(0, 0, 0)).with_flex_direction(FlexDirection::Column), vec![
-            Renderable::View(View::new(Style::new().with_width(50).with_height(100).with_bg(RGB::new(255, 0, 0)).with_fg(RGB::new(0, 0, 0)), vec![])),
-            Renderable::View(View::new(Style::new().with_width(50).with_height(100).with_bg(RGB::new(0, 255, 0)).with_fg(RGB::new(0, 0, 0)), vec![
-                Renderable::View(View::new(Style::new().with_width(15).with_height(50).with_bg(RGB::new(0, 125, 125)).with_fg(RGB::new(0, 0, 0)), vec![])),
-                Renderable::View(View::new(Style::new().with_width(15).with_height(50).with_bg(RGB::new(125, 125, 0)).with_fg(RGB::new(0, 0, 0)), vec![])),
+    let root = Root::new(Style::new().with_width(width).with_height(height).with_bg(BackgroundColor::Color(RGB::new(0, 0, 0))), vec![
+        Renderable::View(View::new(Style::new().with_bg(BackgroundColor::Color(RGB::new(0, 0, 0))).with_flex_direction(FlexDirection::Column), vec![
+            Renderable::View(View::new(Style::new().with_width(50).with_height(100).with_bg(BackgroundColor::Color(RGB::new(255, 0, 0))).with_fg(RGB::new(0, 0, 0)), vec![])),
+            Renderable::View(View::new(Style::new().with_width(50).with_height(100).with_bg(BackgroundColor::Color(RGB::new(0, 255, 0))).with_fg(RGB::new(0, 0, 0)), vec![
+                Renderable::View(View::new(Style::new().with_width(15).with_height(50).with_bg(BackgroundColor::Color(RGB::new(0, 125, 125))).with_fg(RGB::new(0, 0, 0)), vec![])),
+                Renderable::View(View::new(Style::new().with_width(15).with_height(50).with_bg(BackgroundColor::Color(RGB::new(125, 125, 0))).with_fg(RGB::new(0, 0, 0)), vec![])),
+                Renderable::View(View::new(Style::new().with_width(15).with_height(50).with_fg(RGB::new(0, 0, 0)), vec![])),
             ])),
         ]))
     ]);
