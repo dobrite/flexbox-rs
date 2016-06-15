@@ -11,6 +11,7 @@ pub struct Command<'s> {
     pub rect: Rect,
 }
 
+// TODO rgba(0, 0, 0, 0) for transparent ?
 impl<'s> Command<'s> {
     pub fn new(bg: Option<RGB<u8>>, fg: RGB<u8>, text: Option<&'s str>, rect: Rect) -> Self {
         Command {
