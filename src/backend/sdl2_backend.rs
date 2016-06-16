@@ -32,12 +32,9 @@ impl<'f, 'r> Render for Renderer<'f, 'r> {
         self.renderer.clear();
 
         for l in layout {
-            match l.bg {
-                None => {}
-                Some(bg) => {
-                    self.renderer.set_draw_color(to_sdl2_color(bg));
-                    let _ = self.renderer.fill_rect(to_sdl2_rect(l.rect));
-                }
+            if let Some(bg) = l.bg {
+                self.renderer.set_draw_color(to_sdl2_color(bg));
+                let _ = self.renderer.fill_rect(to_sdl2_rect(l.rect));
             }
 
             if let Some(text) = l.text {
