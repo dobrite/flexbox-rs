@@ -268,12 +268,12 @@ fn it_sets_root_height_to_0_text_with_0_height_no_children() {
     let l = Layout::new(&mm);
     let layout = l.layout(&root);
     assert_eq!(2, layout.len());
-    let root = &layout[1];
+    let root = &layout[0];
     assert_eq!(0, root.height());
 }
 
 #[test]
-fn it_sets_root_width_to_double_width_text_with_two_texts() {
+fn it_sets_root_width_to_double_width_text_with_two_texts_flex_direction_row() {
     let root = Root::new(Style::new().with_width(800).with_height(0), vec![
         Renderable::Text(Text::new(Style::new(), "blah")),
         Renderable::Text(Text::new(Style::new(), "blah"))
