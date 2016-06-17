@@ -286,7 +286,8 @@ fn it_sets_root_width_to_double_width_text_with_two_texts() {
     let left = &layout[1];
     assert_eq!(4, left.width());
     let right = &layout[2];
-    assert_eq!(4, left.width());
+    assert_eq!(4, right.rect.left);
+    assert_eq!(4, right.width());
 }
 
 #[test]
