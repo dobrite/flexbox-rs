@@ -13,7 +13,7 @@ struct MockMeasure;
 
 impl Measure for MockMeasure {
     fn get_dim(&self, s: &str) -> Dim {
-        Dim::new(s.as_bytes().len() as u32, 0)
+        Dim::new(s.as_bytes().len() as u32, 4)
     }
 }
 
@@ -288,6 +288,24 @@ fn it_sets_root_width_to_double_width_text_with_two_texts() {
     let right = &layout[2];
     assert_eq!(4, right.rect.left);
     assert_eq!(4, right.width());
+}
+
+#[test]
+fn it_sets_root_width_to_double_width_text_with_two_texts_flex_direction_column() {
+    let root = Root::new(Style::new().with_width(800).with_height(0).with_flex_direction(FlexDirection::Column), vec![
+        Renderable::Text(Text::new(Style::new(), "blah")),
+        Renderable::Text(Text::new(Style::new(), "blah"))
+    ]);
+
+    let mm = MockMeasure;
+    let l = Layout::new(&mm);
+    let layout = l.layout(&root);
+    assert_eq!(3, layout.len());
+    let top = &layout[1];
+    assert_eq!(4, top.width());
+    let bottom = &layout[2];
+    assert_eq!(4, bottom.rect.top);
+    assert_eq!(4, bottom.width());
 }
 
 #[test]

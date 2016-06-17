@@ -64,6 +64,7 @@ impl<'m, 'r> Layout<'m> {
                                     Some(text.children),
                                     Rect::new(cursor.x as i32, cursor.y as i32, width, height)));
                 cursor.x += width;
+                cursor.y += height;
             }
         }
 
