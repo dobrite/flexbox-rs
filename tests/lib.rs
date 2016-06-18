@@ -294,18 +294,31 @@ fn it_sets_root_background_color_to_transparent() {
 }
 
 #[test]
-fn it_sets_text_bg_to_container_bg_when_text_bg_is_None() {
-    let root = Root::new(Style::new().with_width(20).with_height(1).with_bg(BackgroundColor::Color(RGB::new(0, 0, 0))), vec![
+fn it_sets_text_fg_to_container_fg_when_text_fg_is_None() {
+    let root = Root::new(Style::new().with_width(20).with_height(1).with_fg(RGB::new(1, 1, 1)), vec![
         Renderable::Text(Text::new(Style::new(), "blah"))
     ]);
 
     let mm = MockMeasure;
     let l = Layout::new(&mm);
     let layout = l.layout(&root);
-    debug_layout(&layout);
     assert_eq!(2, layout.len());
     let text = &layout[1];
-    assert_eq!(Some(RGB::new(0, 0, 0)), text.bg);
+    assert_eq!(RGB::new(1, 1, 1), text.fg);
+}
+
+#[test]
+fn it_sets_text_bg_to_container_bg_when_text_bg_is_None() {
+    let root = Root::new(Style::new().with_width(20).with_height(1).with_bg(BackgroundColor::Color(RGB::new(1, 1, 1))), vec![
+        Renderable::Text(Text::new(Style::new(), "blah"))
+    ]);
+
+    let mm = MockMeasure;
+    let l = Layout::new(&mm);
+    let layout = l.layout(&root);
+    assert_eq!(2, layout.len());
+    let text = &layout[1];
+    assert_eq!(Some(RGB::new(1, 1, 1)), text.bg);
 }
 
 #[test]

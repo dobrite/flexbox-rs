@@ -25,6 +25,10 @@ impl Cursor {
     }
 
     pub fn apply_style(&mut self, style: &style::Style) {
+        if let Some(fg) = style.fg {
+            self.fg = fg;
+        }
+
         if let Some(bg) = style.bg {
             self.bg = bg;
         }
