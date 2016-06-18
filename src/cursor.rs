@@ -24,6 +24,13 @@ impl Cursor {
         }
     }
 
+    pub fn apply_style(&mut self, style: &style::Style) {
+        if let Some(bg) = style.bg {
+            self.bg = bg;
+        }
+        // TODO prob more
+    }
+
     pub fn compute_bg(&self, bg_style: Option<style::BackgroundColor>) -> Option<rgb::RGB<u8>> {
         match bg_style {
             None => {
