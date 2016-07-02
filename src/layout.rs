@@ -33,8 +33,10 @@ impl<'m, 'r> Layout<'m> {
                 cursor.cascade_style(&view.style);
 
                 {
-                    let rect = Rect::new(cursor.x as i32,
-                                         cursor.y as i32,
+                    let x = cursor.x as i32;
+                    let y = cursor.y as i32;
+                    let rect = Rect::new(x,
+                                         y,
                                          view.style.width.unwrap_or(cursor.width),
                                          view.style.height.unwrap_or(cursor.height));
                     let command = Command::new(cursor.compute_bg(view.style.bg),
@@ -69,7 +71,9 @@ impl<'m, 'r> Layout<'m> {
                 cursor.cascade_style(&text.style);
                 let measure::Dim { width, height } = self.measure.get_dim(text.children);
                 {
-                    let rect = Rect::new(cursor.x as i32, cursor.y as i32, width, height);
+                    let x = cursor.x as i32;
+                    let y = cursor.y as i32;
+                    let rect = Rect::new(x, y, width, height);
                     let command = Command::new(cursor.compute_bg(text.style.bg),
                                                text.style.fg.unwrap_or(cursor.fg),
                                                Some(text.children),
