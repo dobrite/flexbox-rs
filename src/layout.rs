@@ -23,6 +23,8 @@ impl<'m, 'r> Layout<'m> {
 
     // TODO some sort of From or Into would be nice to not have to wrap everythign in the enum
     // TODO pass vec down and back up. right now we're allocating a bunch
+    // TODO background-color is not inherited -- check if this is true
+    // TODO color IS inherited
     fn recurse(&'r self, r: &Renderable<'r>, mut cursor: Cursor) -> (Vec<Command>, Cursor) {
         let mut v = vec![];
 
