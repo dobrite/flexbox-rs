@@ -33,8 +33,11 @@ impl<'m, 'r> Layout<'m> {
                 cursor.cascade_style(&view.style);
 
                 {
-                    let x = cursor.x as i32;
-                    let y = cursor.y as i32;
+                    let (x, y) = if view.style.position == style::Position::Fixed {
+                        (view.style.left.unwrap_or(0), view.style.top.unwrap_or(0))
+                    } else {
+                        (cursor.x as i32, cursor.y as i32)
+                    };
                     let width = view.style.width.unwrap_or(cursor.width);
                     let height = view.style.height.unwrap_or(cursor.height);
                     let rect = Rect::new(x, y, width, height);
@@ -59,10 +62,12 @@ impl<'m, 'r> Layout<'m> {
                     v.append(ls);
                 }
 
-                if cursor.flex_direction == style::FlexDirection::Row {
-                    cursor.x = view.style.width.unwrap_or(cursor.width);
-                } else {
-                    cursor.y = view.style.height.unwrap_or(cursor.height);
+                if view.style.position == style::Position::Static {
+                    if cursor.flex_direction == style::FlexDirection::Row {
+                        cursor.x = view.style.width.unwrap_or(cursor.width);
+                    } else {
+                        cursor.y = view.style.height.unwrap_or(cursor.height);
+                    }
                 }
             }
             &Renderable::Text(ref text) => {
