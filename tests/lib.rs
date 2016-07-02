@@ -429,3 +429,30 @@ fn it_sets_position_fixed_child_static_child() {
     assert_eq!(0, stati.rect.top);
     assert_eq!(0, stati.rect.left);
 }
+
+#[test]
+fn it_sets_position_fixed_child_top() {
+    let child_width = 50u32;
+    let child_height = 100u32;
+    let root = Root::new(Style::new()
+                             .with_width(800)
+                             .with_height(600),
+                         vec![
+       Renderable::View(View::new(Style::new()
+                                  .with_bg(BackgroundColor::Color(RGB::new(255, 255, 255)))
+                                  .with_height(child_height)
+                                  .with_width(child_width)
+                                  .with_top(20)
+                                  .with_position(Position::Fixed), vec![])),
+   ]);
+
+    let mm = MockMeasure;
+    let l = Layout::new(&mm);
+    let layout = l.layout(&root);
+    let fixed = &layout[1];
+    assert_eq!(2, layout.len());
+    assert_eq!(child_height, fixed.height());
+    assert_eq!(child_width, fixed.width());
+    assert_eq!(20, fixed.rect.top);
+    assert_eq!(0, fixed.rect.left);
+}
