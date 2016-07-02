@@ -147,4 +147,24 @@ impl Style {
         self.position = position;
         self
     }
+
+    pub fn with_top(mut self, top: i32) -> Self {
+        self.top = Some(top);
+        self
+    }
+
+    pub fn with_bottom(mut self, bottom: i32) -> Self {
+        self.bottom = Some(bottom);
+        self
+    }
+
+    pub fn with_left(mut self, left: i32) -> Self {
+        self.left = Some(left);
+        self
+    }
+
+    pub fn with_right(mut self, right: i32) -> Self {
+        self.right = Some(right);
+        self
+    }
 }
