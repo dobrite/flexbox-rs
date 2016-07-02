@@ -53,25 +53,56 @@ impl Default for BackgroundColor {
     }
 }
 
+// visible | scroll | hidden | auto
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum Overflow {
+    Visible,
+    Scroll,
+}
+
+impl Default for Overflow {
+    fn default() -> Overflow {
+        Overflow::Visible
+    }
+}
+
+// static | relative | absolute | sticky | fixed
+#[derive(Clone, Copy, Debug, PartialEq)]
+pub enum Position {
+    Static,
+    Fixed,
+}
+
+impl Default for Position {
+    fn default() -> Position {
+        Position::Fixed
+    }
+}
+
 // only dim in flex direction applies e.g. row only width, col only height
 #[derive(Debug)]
 pub struct Style {
     // TODO <D, C> dim, color generic types
     pub width: Option<u32>,
     pub height: Option<u32>,
-    pub fg: Option<RGB<u8>>,
-    pub bg: Option<BackgroundColor>,
+    pub fg: Option<RGB<u8>>, // TODO rename to color?
+    pub bg: Option<BackgroundColor>, // TODO rename to background_color?
     pub flex_direction: FlexDirection,
+    pub overflow: Overflow,
+    pub position: Position,
 }
 
 impl Style {
     pub fn new() -> Self {
+        // TODO can we do Style { Default::default() }
         Style {
             width: Default::default(),
             height: Default::default(),
             fg: Default::default(),
             bg: Default::default(),
             flex_direction: Default::default(),
+            overflow: Default::default(),
+            position: Default::default(),
         }
     }
 
@@ -97,6 +128,16 @@ impl Style {
 
     pub fn with_flex_direction(mut self, fd: FlexDirection) -> Self {
         self.flex_direction = fd;
+        self
+    }
+
+    pub fn with_overflow(mut self, overflow: Overflow) -> Self {
+        self.overflow = overflow;
+        self
+    }
+
+    pub fn with_position(mut self, position: Position) -> Self {
+        self.position = position;
         self
     }
 }

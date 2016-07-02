@@ -10,7 +10,7 @@ pub use render::Render;
 pub use renderable::Renderable;
 pub use rgb::RGB;
 pub use root::Root;
-pub use style::{BackgroundColor, FlexDirection, Style};
+pub use style::{BackgroundColor, FlexDirection, Overflow, Position, Style};
 pub use text::Text;
 pub use view::View;
 
