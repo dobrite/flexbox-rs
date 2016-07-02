@@ -30,7 +30,7 @@ impl<'m, 'r> Layout<'m> {
 
         match r {
             &Renderable::View(ref view) => {
-                cursor.apply_style(&view.style);
+                cursor.cascade_style(&view.style);
 
                 {
                     let rect = Rect::new(cursor.x as i32,
@@ -66,7 +66,7 @@ impl<'m, 'r> Layout<'m> {
                 }
             }
             &Renderable::Text(ref text) => {
-                cursor.apply_style(&text.style);
+                cursor.cascade_style(&text.style);
                 let measure::Dim { width, height } = self.measure.get_dim(text.children);
                 {
                     let rect = Rect::new(cursor.x as i32, cursor.y as i32, width, height);

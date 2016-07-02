@@ -24,7 +24,7 @@ impl Cursor {
         }
     }
 
-    pub fn apply_style(&mut self, style: &style::Style) {
+    pub fn cascade_style(&mut self, style: &style::Style) {
         if let Some(fg) = style.fg {
             self.fg = fg;
         }
