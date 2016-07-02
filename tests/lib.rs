@@ -75,7 +75,8 @@ fn it_sets_root_height_to_100_with_no_children() {
 #[test]
 fn it_sets_child_dim_with_no_child_height() {
     let child_width = 50u32;
-    let root = Root::new(Style::new().with_width(800).with_height(600), vec![
+    let root = Root::new(Style::new().with_width(800).with_height(600),
+                         vec![
         Renderable::View(View::new(Style::new().with_width(child_width), vec![])),
     ]);
 
@@ -91,7 +92,8 @@ fn it_sets_child_dim_with_no_child_height() {
 #[test]
 fn it_sets_child_dim_with_no_child_width() {
     let child_height = 100u32;
-    let root = Root::new(Style::new().with_width(800).with_height(600), vec![
+    let root = Root::new(Style::new().with_width(800).with_height(600),
+                         vec![
         Renderable::View(View::new(Style::new().with_height(child_height), vec![])),
     ]);
 
@@ -108,8 +110,10 @@ fn it_sets_child_dim_with_no_child_width() {
 fn it_sets_single_child_dim() {
     let child_width = 50u32;
     let child_height = 100u32;
-    let root = Root::new(Style::new().with_width(800).with_height(600), vec![
-        Renderable::View(View::new(Style::new().with_height(child_height).with_width(child_width), vec![])),
+    let root = Root::new(Style::new().with_width(800).with_height(600),
+                         vec![
+        Renderable::View(View::new(Style::new().with_height(child_height)
+                                   .with_width(child_width), vec![])),
     ]);
 
     let mm = MockMeasure;
@@ -126,9 +130,12 @@ fn it_sets_two_child_rect_row() {
     let children_width = 50u32;
     let children_height = 100u32;
 
-    let root = Root::new(Style::new().with_width(800).with_height(600), vec![
-        Renderable::View(View::new(Style::new().with_height(children_height).with_width(children_width), vec![])),
-        Renderable::View(View::new(Style::new().with_height(children_height).with_width(children_width), vec![])),
+    let root = Root::new(Style::new().with_width(800).with_height(600),
+                         vec![
+        Renderable::View(View::new(Style::new().with_height(children_height)
+                                   .with_width(children_width), vec![])),
+        Renderable::View(View::new(Style::new().with_height(children_height)
+                                   .with_width(children_width), vec![])),
     ]);
 
     let mm = MockMeasure;
@@ -154,9 +161,15 @@ fn it_sets_two_child_rect_column() {
     let children_width = 50u32;
     let children_height = 100u32;
 
-    let root = Root::new(Style::new().with_width(800).with_height(600).with_flex_direction(FlexDirection::Column), vec![
-        Renderable::View(View::new(Style::new().with_height(children_height).with_width(children_width), vec![])),
-        Renderable::View(View::new(Style::new().with_height(children_height).with_width(children_width), vec![])),
+    let root = Root::new(Style::new()
+                             .with_width(800)
+                             .with_height(600)
+                             .with_flex_direction(FlexDirection::Column),
+                         vec![
+        Renderable::View(View::new(Style::new().with_height(children_height)
+                                   .with_width(children_width), vec![])),
+        Renderable::View(View::new(Style::new().with_height(children_height)
+                                   .with_width(children_width), vec![])),
     ]);
 
     let mm = MockMeasure;
@@ -179,7 +192,11 @@ fn it_sets_two_child_rect_column() {
 
 #[test]
 fn it_sets_two_child_two_child_rect_column() {
-    let root = Root::new(Style::new().with_width(800).with_height(600).with_flex_direction(FlexDirection::Column), vec![
+    let root = Root::new(Style::new()
+                             .with_width(800)
+                             .with_height(600)
+                             .with_flex_direction(FlexDirection::Column),
+                         vec![
         Renderable::View(View::new(Style::new().with_height(100).with_width(50), vec![])),
         Renderable::View(View::new(Style::new().with_height(100).with_width(50), vec![
             Renderable::View(View::new(Style::new().with_height(25).with_width(15), vec![])),
@@ -219,9 +236,8 @@ fn it_sets_two_child_two_child_rect_column() {
 
 #[test]
 fn it_sets_root_width_to_width_text_with_default_height_no_children() {
-    let root = Root::new(Style::new().with_width(800).with_height(0), vec![
-        Renderable::Text(Text::new(Style::new(), "blah"))
-    ]);
+    let root = Root::new(Style::new().with_width(800).with_height(0),
+                         vec![Renderable::Text(Text::new(Style::new(), "blah"))]);
 
     let mm = MockMeasure;
     let l = Layout::new(&mm);
@@ -233,9 +249,8 @@ fn it_sets_root_width_to_width_text_with_default_height_no_children() {
 
 #[test]
 fn it_sets_root_height_to_0_text_with_0_height_no_children() {
-    let root = Root::new(Style::new().with_width(800).with_height(0), vec![
-        Renderable::Text(Text::new(Style::new(), "blah"))
-    ]);
+    let root = Root::new(Style::new().with_width(800).with_height(0),
+                         vec![Renderable::Text(Text::new(Style::new(), "blah"))]);
 
     let mm = MockMeasure;
     let l = Layout::new(&mm);
@@ -247,10 +262,9 @@ fn it_sets_root_height_to_0_text_with_0_height_no_children() {
 
 #[test]
 fn it_sets_root_width_to_double_width_text_with_two_texts_flex_direction_row() {
-    let root = Root::new(Style::new().with_width(800).with_height(0), vec![
-        Renderable::Text(Text::new(Style::new(), "blah")),
-        Renderable::Text(Text::new(Style::new(), "blah"))
-    ]);
+    let root = Root::new(Style::new().with_width(800).with_height(0),
+                         vec![Renderable::Text(Text::new(Style::new(), "blah")),
+                              Renderable::Text(Text::new(Style::new(), "blah"))]);
 
     let mm = MockMeasure;
     let l = Layout::new(&mm);
@@ -265,10 +279,12 @@ fn it_sets_root_width_to_double_width_text_with_two_texts_flex_direction_row() {
 
 #[test]
 fn it_sets_root_width_to_double_width_text_with_two_texts_flex_direction_column() {
-    let root = Root::new(Style::new().with_width(800).with_height(0).with_flex_direction(FlexDirection::Column), vec![
-        Renderable::Text(Text::new(Style::new(), "blah")),
-        Renderable::Text(Text::new(Style::new(), "blah"))
-    ]);
+    let root = Root::new(Style::new()
+                             .with_width(800)
+                             .with_height(0)
+                             .with_flex_direction(FlexDirection::Column),
+                         vec![Renderable::Text(Text::new(Style::new(), "blah")),
+                              Renderable::Text(Text::new(Style::new(), "blah"))]);
 
     let mm = MockMeasure;
     let l = Layout::new(&mm);
@@ -295,9 +311,8 @@ fn it_sets_root_background_color_to_transparent() {
 
 #[test]
 fn it_sets_text_fg_to_container_fg_when_text_fg_is_None() {
-    let root = Root::new(Style::new().with_width(20).with_height(1).with_fg(RGB::new(1, 1, 1)), vec![
-        Renderable::Text(Text::new(Style::new(), "blah"))
-    ]);
+    let root = Root::new(Style::new().with_width(20).with_height(1).with_fg(RGB::new(1, 1, 1)),
+                         vec![Renderable::Text(Text::new(Style::new(), "blah"))]);
 
     let mm = MockMeasure;
     let l = Layout::new(&mm);
@@ -309,9 +324,11 @@ fn it_sets_text_fg_to_container_fg_when_text_fg_is_None() {
 
 #[test]
 fn it_sets_text_bg_to_container_bg_when_text_bg_is_None() {
-    let root = Root::new(Style::new().with_width(20).with_height(1).with_bg(BackgroundColor::Color(RGB::new(1, 1, 1))), vec![
-        Renderable::Text(Text::new(Style::new(), "blah"))
-    ]);
+    let root = Root::new(Style::new()
+                             .with_width(20)
+                             .with_height(1)
+                             .with_bg(BackgroundColor::Color(RGB::new(1, 1, 1))),
+                         vec![Renderable::Text(Text::new(Style::new(), "blah"))]);
 
     let mm = MockMeasure;
     let l = Layout::new(&mm);
@@ -323,9 +340,10 @@ fn it_sets_text_bg_to_container_bg_when_text_bg_is_None() {
 
 #[test]
 fn it_sets_text_fg() {
-    let root = Root::new(Style::new().with_width(20).with_height(1).with_fg(RGB::new(0, 0, 0)), vec![
-        Renderable::Text(Text::new(Style::new().with_fg(RGB::new(255, 255, 255)), "blah"))
-    ]);
+    let root = Root::new(Style::new().with_width(20).with_height(1).with_fg(RGB::new(0, 0, 0)),
+                         vec![Renderable::Text(Text::new(Style::new()
+                                                             .with_fg(RGB::new(255, 255, 255)),
+                                                         "blah"))]);
 
     let mm = MockMeasure;
     let l = Layout::new(&mm);
@@ -337,8 +355,14 @@ fn it_sets_text_fg() {
 
 #[test]
 fn it_sets_text_bg() {
-    let root = Root::new(Style::new().with_width(20).with_height(1).with_bg(BackgroundColor::Color(RGB::new(0, 0, 0))), vec![
-        Renderable::Text(Text::new(Style::new().with_bg(BackgroundColor::Color(RGB::new(255, 255, 255))), "blah"))
+    let root = Root::new(Style::new()
+                             .with_width(20)
+                             .with_height(1)
+                             .with_bg(BackgroundColor::Color(RGB::new(0, 0, 0))),
+                         vec![
+        Renderable::Text(Text::new(Style::new()
+                                   .with_bg(BackgroundColor::Color(
+                                           RGB::new(255, 255, 255))), "blah"))
     ]);
 
     let mm = MockMeasure;
