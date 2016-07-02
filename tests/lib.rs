@@ -372,3 +372,25 @@ fn it_sets_text_bg() {
     let text = &layout[1];
     assert_eq!(Some(RGB::new(255, 255, 255)), text.bg);
 }
+
+#[test]
+fn it_sets_position_fixed_single_child() {
+    let child_width = 50u32;
+    let child_height = 100u32;
+    let root = Root::new(Style::new().with_width(800).with_height(600),
+                         vec![Renderable::View(View::new(Style::new()
+                                                             .with_height(child_height)
+                                                             .with_width(child_width)
+                                                             .with_position(Position::Fixed),
+                                                         vec![]))]);
+
+    let mm = MockMeasure;
+    let l = Layout::new(&mm);
+    let layout = l.layout(&root);
+    let child = &layout[1];
+    assert_eq!(2, layout.len());
+    assert_eq!(0, child.rect.top);
+    assert_eq!(0, child.rect.left);
+    assert_eq!(child_height, child.height());
+    assert_eq!(child_width, child.width());
+}
