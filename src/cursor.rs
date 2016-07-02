@@ -24,6 +24,8 @@ impl Cursor {
         }
     }
 
+    // TODO define those styles that cascade and then do something smarter
+    // i.e. loop on cascaded styles and assign
     pub fn cascade_style(&mut self, style: &style::Style) {
         if let Some(fg) = style.fg {
             self.fg = fg;
