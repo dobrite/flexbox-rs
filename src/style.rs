@@ -80,7 +80,7 @@ impl Default for Position {
 }
 
 // only dim in flex direction applies e.g. row only width, col only height
-#[derive(Debug)]
+#[derive(Debug, Default)]
 pub struct Style {
     // TODO <D, C> dim, color generic types
     pub width: Option<u32>,
@@ -98,19 +98,7 @@ pub struct Style {
 
 impl Style {
     pub fn new() -> Self {
-        Style {
-            width: Default::default(),
-            height: Default::default(),
-            fg: Default::default(),
-            bg: Default::default(),
-            flex_direction: Default::default(),
-            overflow: Default::default(),
-            position: Default::default(),
-            top: Default::default(),
-            bottom: Default::default(),
-            left: Default::default(),
-            right: Default::default(),
-        }
+        Style { ..Default::default() }
     }
 
     pub fn with_width(mut self, width: u32) -> Self {
