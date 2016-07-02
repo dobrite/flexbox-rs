@@ -31,13 +31,18 @@ impl<'m, 'r> Layout<'m> {
         match r {
             &Renderable::View(ref view) => {
                 cursor.apply_style(&view.style);
-                v.push(Command::new(cursor.compute_bg(view.style.bg),
-                                    view.style.fg.unwrap_or(cursor.fg),
-                                    None,
-                                    Rect::new(cursor.x as i32,
-                                              cursor.y as i32,
-                                              view.style.width.unwrap_or(cursor.width),
-                                              view.style.height.unwrap_or(cursor.height))));
+
+                {
+                    let rect = Rect::new(cursor.x as i32,
+                                         cursor.y as i32,
+                                         view.style.width.unwrap_or(cursor.width),
+                                         view.style.height.unwrap_or(cursor.height));
+                    let command = Command::new(cursor.compute_bg(view.style.bg),
+                                               view.style.fg.unwrap_or(cursor.fg),
+                                               None,
+                                               rect);
+                    v.push(command);
+                }
 
                 let mut parent_cursor = cursor;
                 parent_cursor.flex_direction = view.style.flex_direction;
@@ -63,10 +68,14 @@ impl<'m, 'r> Layout<'m> {
             &Renderable::Text(ref text) => {
                 cursor.apply_style(&text.style);
                 let measure::Dim { width, height } = self.measure.get_dim(text.children);
-                v.push(Command::new(cursor.compute_bg(text.style.bg),
-                                    text.style.fg.unwrap_or(cursor.fg),
-                                    Some(text.children),
-                                    Rect::new(cursor.x as i32, cursor.y as i32, width, height)));
+                {
+                    let rect = Rect::new(cursor.x as i32, cursor.y as i32, width, height);
+                    let command = Command::new(cursor.compute_bg(text.style.bg),
+                                               text.style.fg.unwrap_or(cursor.fg),
+                                               Some(text.children),
+                                               rect);
+                    v.push(command);
+                }
                 cursor.x += width;
                 cursor.y += height;
             }
