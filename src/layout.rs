@@ -38,10 +38,9 @@ impl<'m, 'r> Layout<'m> {
                     let width = view.style.width.unwrap_or(cursor.width);
                     let height = view.style.height.unwrap_or(cursor.height);
                     let rect = Rect::new(x, y, width, height);
-                    let command = Command::new(cursor.compute_bg(view.style.bg),
-                                               view.style.fg.unwrap_or(cursor.fg),
-                                               None,
-                                               rect);
+                    let bg = cursor.compute_bg(view.style.bg);
+                    let fg = view.style.fg.unwrap_or(cursor.fg);
+                    let command = Command::new(bg, fg, None, rect);
                     v.push(command);
                 }
 
@@ -73,10 +72,9 @@ impl<'m, 'r> Layout<'m> {
                     let x = cursor.x as i32;
                     let y = cursor.y as i32;
                     let rect = Rect::new(x, y, width, height);
-                    let command = Command::new(cursor.compute_bg(text.style.bg),
-                                               text.style.fg.unwrap_or(cursor.fg),
-                                               Some(text.children),
-                                               rect);
+                    let bg = cursor.compute_bg(text.style.bg);
+                    let fg = text.style.fg.unwrap_or(cursor.fg);
+                    let command = Command::new(bg, fg, Some(text.children), rect);
                     v.push(command);
                 }
                 cursor.x += width;
