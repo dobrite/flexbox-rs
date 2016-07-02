@@ -75,7 +75,7 @@ pub enum Position {
 
 impl Default for Position {
     fn default() -> Position {
-        Position::Fixed
+        Position::Static
     }
 }
 
