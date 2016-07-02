@@ -35,10 +35,9 @@ impl<'m, 'r> Layout<'m> {
                 {
                     let x = cursor.x as i32;
                     let y = cursor.y as i32;
-                    let rect = Rect::new(x,
-                                         y,
-                                         view.style.width.unwrap_or(cursor.width),
-                                         view.style.height.unwrap_or(cursor.height));
+                    let width = view.style.width.unwrap_or(cursor.width);
+                    let height = view.style.height.unwrap_or(cursor.height);
+                    let rect = Rect::new(x, y, width, height);
                     let command = Command::new(cursor.compute_bg(view.style.bg),
                                                view.style.fg.unwrap_or(cursor.fg),
                                                None,
