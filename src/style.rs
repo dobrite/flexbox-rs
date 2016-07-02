@@ -85,6 +85,10 @@ pub struct Style {
     // TODO <D, C> dim, color generic types
     pub width: Option<u32>,
     pub height: Option<u32>,
+    pub top: Option<i32>,
+    pub bottom: Option<i32>,
+    pub left: Option<i32>,
+    pub right: Option<i32>,
     pub fg: Option<RGB<u8>>, // TODO rename to color?
     pub bg: Option<BackgroundColor>, // TODO rename to background_color?
     pub flex_direction: FlexDirection,
@@ -94,7 +98,6 @@ pub struct Style {
 
 impl Style {
     pub fn new() -> Self {
-        // TODO can we do Style { Default::default() }
         Style {
             width: Default::default(),
             height: Default::default(),
@@ -103,6 +106,10 @@ impl Style {
             flex_direction: Default::default(),
             overflow: Default::default(),
             position: Default::default(),
+            top: Default::default(),
+            bottom: Default::default(),
+            left: Default::default(),
+            right: Default::default(),
         }
     }
 
