@@ -8,6 +8,8 @@ use style;
 pub struct Cursor {
     pub x: u32,
     pub y: u32,
+    pub root_width: u32,
+    pub root_height: u32,
     pub width: u32,
     pub height: u32,
     pub fg: rgb::RGB<u8>,
@@ -18,6 +20,8 @@ pub struct Cursor {
 impl Cursor {
     pub fn new(width: u32, height: u32) -> Self {
         Cursor {
+            root_width: width,
+            root_height: height,
             width: width,
             height: height,
             ..Default::default()

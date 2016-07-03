@@ -29,17 +29,29 @@ impl<'m, 'r> Layout<'m> {
         let mut v = vec![];
 
         match r {
+            // TODO can we destructure view and children here?
             &Renderable::View(ref view) => {
                 cursor.cascade_style(&view.style);
 
                 {
+                    let width = view.style.width.unwrap_or(cursor.width);
+                    let height = view.style.height.unwrap_or(cursor.height);
                     let (x, y) = if view.style.position == style::Position::Fixed {
-                        (view.style.left.unwrap_or(0), view.style.top.unwrap_or(0))
+                        // TODO When both top and bottom are specified, as long as height is
+                        // unspecified, auto or 100%, both top and bottom distances will be
+                        // respected. Otherwise, if height is constrained in any way, the top
+                        // property takes precedence and the bottom property is ignored.
+                        let x = view.style.left.unwrap_or(view.style
+                            .right
+                            .map_or(0, |right| cursor.root_width as i32 - right - width as i32));
+                        let y = view.style.top.unwrap_or(view.style
+                            .bottom
+                            .map_or(0,
+                                    |bottom| cursor.root_height as i32 - bottom - height as i32));
+                        (x, y)
                     } else {
                         (cursor.x as i32, cursor.y as i32)
                     };
-                    let width = view.style.width.unwrap_or(cursor.width);
-                    let height = view.style.height.unwrap_or(cursor.height);
                     let rect = Rect::new(x, y, width, height);
                     let bg = cursor.compute_bg(view.style.bg);
                     let fg = view.style.fg.unwrap_or(cursor.fg);
@@ -70,6 +82,7 @@ impl<'m, 'r> Layout<'m> {
                     }
                 }
             }
+            // TODO can we destructure view and children here?
             &Renderable::Text(ref text) => {
                 cursor.cascade_style(&text.style);
                 let measure::Dim { width, height } = self.measure.get_dim(text.children);

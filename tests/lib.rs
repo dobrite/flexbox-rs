@@ -457,6 +457,65 @@ fn it_sets_position_fixed_child_top() {
     assert_eq!(0, fixed.rect.left);
 }
 
+// TODO precedence between top/bottom and left/right
+#[test]
+fn it_sets_position_fixed_child_bottom_600() {
+    let child_width = 50u32;
+    let child_height = 100u32;
+    let root = Root::new(Style::new()
+                             .with_width(800)
+                             .with_height(600),
+                         vec![
+       Renderable::View(View::new(Style::new()
+                                  .with_bg(BackgroundColor::Color(RGB::new(255, 255, 255)))
+                                  .with_height(child_height)
+                                  .with_width(child_width)
+                                  .with_bottom(20)
+                                  .with_position(Position::Fixed), vec![])),
+   ]);
+
+    let mm = MockMeasure;
+    let l = Layout::new(&mm);
+    let layout = l.layout(&root);
+    let fixed = &layout[1];
+    assert_eq!(2, layout.len());
+    assert_eq!(child_height, fixed.height());
+    assert_eq!(child_width, fixed.width());
+    assert_eq!(480, fixed.rect.top);
+    assert_eq!(0, fixed.rect.left);
+}
+
+#[test]
+fn it_sets_position_fixed_child_bottom_1000() {
+    let child_width = 50u32;
+    let child_height = 100u32;
+    let root = Root::new(Style::new()
+                             .with_width(800)
+                             .with_height(1000),
+                         vec![
+      Renderable::View(View::new(Style::new()
+                                 .with_bg(BackgroundColor::Color(RGB::new(255, 255, 255)))
+                                 .with_height(child_height)
+                                 .with_width(child_width)
+                                 .with_bottom(20)
+                                 .with_position(Position::Fixed), vec![])),
+  ]);
+
+    let mm = MockMeasure;
+    let l = Layout::new(&mm);
+    let layout = l.layout(&root);
+    let fixed = &layout[1];
+    assert_eq!(2, layout.len());
+    assert_eq!(child_height, fixed.height());
+    assert_eq!(child_width, fixed.width());
+    assert_eq!(880, fixed.rect.top);
+    assert_eq!(0, fixed.rect.left);
+}
+
+// left and right
+// with missing child width should be 0
+// with missing child height should be 0
+
 #[test]
 fn it_sets_position_fixed_child_left() {
     let child_width = 50u32;
