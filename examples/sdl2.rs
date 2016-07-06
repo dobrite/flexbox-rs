@@ -52,12 +52,29 @@ fn main() {
     let mut renderer = sdl2_backend::Renderer::new(sdl2_renderer, &font);
     let measurer = sdl2_backend::Measurer::new(ttf_context, &font);
     let layout = Layout::new(&measurer);
+    let mut camera = Camera::new();
 
     loop {
         events.pump();
 
         if events.quit || events.key_escape {
             break;
+        }
+
+        if events.key_j == Some(true) {
+            camera.down();
+        }
+
+        if events.key_k == Some(true) {
+            camera.up();
+        }
+
+        if events.key_l == Some(true) {
+            camera.right();
+        }
+
+        if events.key_h == Some(true) {
+            camera.left();
         }
 
         renderer.render(&layout.layout(&root));
