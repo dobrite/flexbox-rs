@@ -77,6 +77,6 @@ fn main() {
             camera.left();
         }
 
-        renderer.render(&layout.layout(&root));
+        renderer.render(&layout.layout(&root, camera.loc.into_offset()));
     }
 }

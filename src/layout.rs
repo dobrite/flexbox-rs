@@ -2,6 +2,7 @@
 use command::Command;
 use cursor::Cursor;
 use measure;
+use offset;
 use rect::Rect;
 use renderable::Renderable;
 use root;
@@ -16,8 +17,8 @@ impl<'m, 'r> Layout<'m> {
         Layout { measure: measure }
     }
 
-    pub fn layout(&'r self, root: &root::Root<'r>) -> Vec<Command> {
-        let cursor = Cursor::new(root.width, root.height);
+    pub fn layout(&'r self, root: &root::Root<'r>, offset: offset::Offset) -> Vec<Command> {
+        let cursor = Cursor::new(root.width, root.height, offset);
         self.recurse(root.root(), cursor).0
     }
 
@@ -50,7 +51,7 @@ impl<'m, 'r> Layout<'m> {
                                     |bottom| cursor.root_height as i32 - bottom - height as i32));
                         (x, y)
                     } else {
-                        (cursor.x as i32, cursor.y as i32)
+                        (cursor.x as i32 + cursor.offset_x, cursor.y as i32 + cursor.offset_y)
                     };
                     let rect = Rect::new(x, y, width, height);
                     let bg = cursor.compute_bg(view.style.bg);

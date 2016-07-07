@@ -5,7 +5,7 @@ use super::point::Point;
 
 #[derive(Default)]
 pub struct Camera {
-    loc: Point,
+    pub loc: Point,
 }
 
 impl Camera {
