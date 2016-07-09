@@ -1,6 +1,7 @@
 
 use style::Style;
 
+#[derive(Debug)]
 pub struct Text<'a> {
     pub style: Style,
     pub children: &'a str,
