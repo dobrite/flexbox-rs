@@ -77,9 +77,9 @@ impl<'m, 'r> Layout<'m> {
 
                 if view.style.position == style::Position::Static {
                     if cursor.flex_direction == style::FlexDirection::Row {
-                        cursor.x = view.style.width.unwrap_or(cursor.width);
+                        cursor.x += view.style.width.unwrap_or(cursor.width);
                     } else {
-                        cursor.y = view.style.height.unwrap_or(cursor.height);
+                        cursor.y += view.style.height.unwrap_or(cursor.height);
                     }
                 }
             }

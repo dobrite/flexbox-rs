@@ -642,4 +642,53 @@ fn it_renders_consecutive_text_elements_row() {
     let c = &layout[3];
     assert_eq!(2, c.left());
 }
+
+#[test]
+// TODO the column version
+fn it_renders_consecutive_text_elements_three_rows() {
+    let root = Root::new(Style::new()
+                             .with_width(12)
+                             .with_height(4)
+                             .with_flex_direction(FlexDirection::Column),
+                         vec![
+        Renderable::View(View::new(Style::new(), vec![
+            Renderable::Text(Text::new(Style::new(), "a")),
+            Renderable::Text(Text::new(Style::new(), "b")),
+            Renderable::Text(Text::new(Style::new(), "c")),
+        ])),
+        Renderable::View(View::new(Style::new(), vec![
+            Renderable::Text(Text::new(Style::new(), "d")),
+            Renderable::Text(Text::new(Style::new(), "e")),
+            Renderable::Text(Text::new(Style::new(), "f")),
+        ])),
+        Renderable::View(View::new(Style::new(), vec![
+            Renderable::Text(Text::new(Style::new(), "g")),
+            Renderable::Text(Text::new(Style::new(), "h")),
+            Renderable::Text(Text::new(Style::new(), "i")),
+        ])),
+    ]);
+
+    let mm = MockMeasure;
+    let l = Layout::new(&mm);
+    let layout = l.layout(&root, Offset::new(0, 0));
+    assert_eq!(13, layout.len());
+    let d = &layout[6];
+    assert_eq!(0, d.left());
+    assert_eq!(4, d.top());
+    let e = &layout[7];
+    assert_eq!(1, e.left());
+    assert_eq!(4, e.top());
+    let f = &layout[8];
+    assert_eq!(2, f.left());
+    assert_eq!(4, f.top());
+    let g = &layout[10];
+    assert_eq!(0, g.left());
+    assert_eq!(8, g.top());
+    let h = &layout[11];
+    assert_eq!(1, h.left());
+    assert_eq!(8, h.top());
+    let i = &layout[12];
+    assert_eq!(2, i.left());
+    assert_eq!(8, i.top());
+}
 // TODO should cut off text that is taller than height (test in browser)
