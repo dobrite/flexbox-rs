@@ -67,9 +67,9 @@ impl<'m, 'r> Layout<'m> {
                     let (ref mut ls, nc) = self.recurse(child, parent_cursor);
 
                     if parent_cursor.flex_direction == style::FlexDirection::Row {
-                        parent_cursor.x += nc.x;
+                        parent_cursor.x = nc.x;
                     } else {
-                        parent_cursor.y += nc.y;
+                        parent_cursor.y = nc.y;
                     }
 
                     v.append(ls);
