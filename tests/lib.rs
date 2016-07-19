@@ -77,8 +77,8 @@ fn it_sets_child_dim_with_no_child_height() {
     let child_width = 50u32;
     let root = Root::new(Style::new().with_width(800).with_height(600),
                          vec![
-        Renderable::View(View::new(Style::new().with_width(child_width), vec![])),
-    ]);
+       Renderable::View(View::new(Style::new().with_width(child_width), vec![])),
+   ]);
 
     let mm = MockMeasure;
     let l = Layout::new(&mm);
@@ -94,8 +94,8 @@ fn it_sets_child_dim_with_no_child_width() {
     let child_height = 100u32;
     let root = Root::new(Style::new().with_width(800).with_height(600),
                          vec![
-        Renderable::View(View::new(Style::new().with_height(child_height), vec![])),
-    ]);
+       Renderable::View(View::new(Style::new().with_height(child_height), vec![])),
+   ]);
 
     let mm = MockMeasure;
     let l = Layout::new(&mm);
@@ -112,9 +112,9 @@ fn it_sets_single_child_dim() {
     let child_height = 100u32;
     let root = Root::new(Style::new().with_width(800).with_height(600),
                          vec![
-        Renderable::View(View::new(Style::new().with_height(child_height)
-                                   .with_width(child_width), vec![])),
-    ]);
+       Renderable::View(View::new(Style::new().with_height(child_height)
+                                  .with_width(child_width), vec![])),
+   ]);
 
     let mm = MockMeasure;
     let l = Layout::new(&mm);
@@ -132,11 +132,11 @@ fn it_sets_two_child_rect_row() {
 
     let root = Root::new(Style::new().with_width(800).with_height(600),
                          vec![
-        Renderable::View(View::new(Style::new().with_height(children_height)
-                                   .with_width(children_width), vec![])),
-        Renderable::View(View::new(Style::new().with_height(children_height)
-                                   .with_width(children_width), vec![])),
-    ]);
+       Renderable::View(View::new(Style::new().with_height(children_height)
+                                  .with_width(children_width), vec![])),
+       Renderable::View(View::new(Style::new().with_height(children_height)
+                                  .with_width(children_width), vec![])),
+   ]);
 
     let mm = MockMeasure;
     let l = Layout::new(&mm);
@@ -166,11 +166,11 @@ fn it_sets_two_child_rect_column() {
                              .with_height(600)
                              .with_flex_direction(FlexDirection::Column),
                          vec![
-        Renderable::View(View::new(Style::new().with_height(children_height)
-                                   .with_width(children_width), vec![])),
-        Renderable::View(View::new(Style::new().with_height(children_height)
-                                   .with_width(children_width), vec![])),
-    ]);
+       Renderable::View(View::new(Style::new().with_height(children_height)
+                                  .with_width(children_width), vec![])),
+       Renderable::View(View::new(Style::new().with_height(children_height)
+                                  .with_width(children_width), vec![])),
+   ]);
 
     let mm = MockMeasure;
     let l = Layout::new(&mm);
@@ -197,12 +197,12 @@ fn it_sets_two_child_two_child_rect_column() {
                              .with_height(600)
                              .with_flex_direction(FlexDirection::Column),
                          vec![
-        Renderable::View(View::new(Style::new().with_height(100).with_width(50), vec![])),
-        Renderable::View(View::new(Style::new().with_height(100).with_width(50), vec![
-            Renderable::View(View::new(Style::new().with_height(25).with_width(15), vec![])),
-            Renderable::View(View::new(Style::new().with_height(25).with_width(15), vec![])),
-        ])),
-    ]);
+       Renderable::View(View::new(Style::new().with_height(100).with_width(50), vec![])),
+       Renderable::View(View::new(Style::new().with_height(100).with_width(50), vec![
+           Renderable::View(View::new(Style::new().with_height(25).with_width(15), vec![])),
+           Renderable::View(View::new(Style::new().with_height(25).with_width(15), vec![])),
+       ])),
+   ]);
 
     let mm = MockMeasure;
     let l = Layout::new(&mm);
@@ -360,10 +360,10 @@ fn it_sets_text_bg() {
                              .with_height(1)
                              .with_bg(BackgroundColor::Color(RGB::new(0, 0, 0))),
                          vec![
-        Renderable::Text(Text::new(Style::new()
-                                   .with_bg(BackgroundColor::Color(
-                                           RGB::new(255, 255, 255))), "blah"))
-    ]);
+       Renderable::Text(Text::new(Style::new()
+                                  .with_bg(BackgroundColor::Color(
+                                          RGB::new(255, 255, 255))), "blah"))
+   ]);
 
     let mm = MockMeasure;
     let l = Layout::new(&mm);
@@ -403,16 +403,16 @@ fn it_sets_position_fixed_child_static_child() {
                              .with_width(800)
                              .with_height(600),
                          vec![
-       Renderable::View(View::new(Style::new()
-                                  .with_bg(BackgroundColor::Color(RGB::new(255, 255, 255)))
-                                  .with_height(child_height)
-                                  .with_width(child_width)
-                                  .with_position(Position::Fixed), vec![])),
-       Renderable::View(View::new(Style::new()
-                                  .with_bg(BackgroundColor::Color(RGB::new(255, 255, 255)))
-                                  .with_height(child_height)
-                                  .with_width(child_width), vec![]))
-   ]);
+      Renderable::View(View::new(Style::new()
+                                 .with_bg(BackgroundColor::Color(RGB::new(255, 255, 255)))
+                                 .with_height(child_height)
+                                 .with_width(child_width)
+                                 .with_position(Position::Fixed), vec![])),
+      Renderable::View(View::new(Style::new()
+                                 .with_bg(BackgroundColor::Color(RGB::new(255, 255, 255)))
+                                 .with_height(child_height)
+                                 .with_width(child_width), vec![]))
+  ]);
 
     let mm = MockMeasure;
     let l = Layout::new(&mm);
@@ -438,13 +438,13 @@ fn it_sets_position_fixed_child_top() {
                              .with_width(800)
                              .with_height(600),
                          vec![
-       Renderable::View(View::new(Style::new()
-                                  .with_bg(BackgroundColor::Color(RGB::new(255, 255, 255)))
-                                  .with_height(child_height)
-                                  .with_width(child_width)
-                                  .with_top(20)
-                                  .with_position(Position::Fixed), vec![])),
-   ]);
+      Renderable::View(View::new(Style::new()
+                                 .with_bg(BackgroundColor::Color(RGB::new(255, 255, 255)))
+                                 .with_height(child_height)
+                                 .with_width(child_width)
+                                 .with_top(20)
+                                 .with_position(Position::Fixed), vec![])),
+  ]);
 
     let mm = MockMeasure;
     let l = Layout::new(&mm);
@@ -465,13 +465,13 @@ fn it_sets_position_fixed_child_bottom_600() {
                              .with_width(800)
                              .with_height(600),
                          vec![
-       Renderable::View(View::new(Style::new()
-                                  .with_bg(BackgroundColor::Color(RGB::new(255, 255, 255)))
-                                  .with_height(child_height)
-                                  .with_width(child_width)
-                                  .with_bottom(20)
-                                  .with_position(Position::Fixed), vec![])),
-   ]);
+      Renderable::View(View::new(Style::new()
+                                 .with_bg(BackgroundColor::Color(RGB::new(255, 255, 255)))
+                                 .with_height(child_height)
+                                 .with_width(child_width)
+                                 .with_bottom(20)
+                                 .with_position(Position::Fixed), vec![])),
+  ]);
 
     let mm = MockMeasure;
     let l = Layout::new(&mm);
@@ -492,13 +492,13 @@ fn it_sets_position_fixed_child_bottom_1000() {
                              .with_width(800)
                              .with_height(1000),
                          vec![
-      Renderable::View(View::new(Style::new()
-                                 .with_bg(BackgroundColor::Color(RGB::new(255, 255, 255)))
-                                 .with_height(child_height)
-                                 .with_width(child_width)
-                                 .with_bottom(20)
-                                 .with_position(Position::Fixed), vec![])),
-  ]);
+     Renderable::View(View::new(Style::new()
+                                .with_bg(BackgroundColor::Color(RGB::new(255, 255, 255)))
+                                .with_height(child_height)
+                                .with_width(child_width)
+                                .with_bottom(20)
+                                .with_position(Position::Fixed), vec![])),
+ ]);
 
     let mm = MockMeasure;
     let l = Layout::new(&mm);
@@ -522,13 +522,13 @@ fn it_sets_position_fixed_child_left() {
                              .with_width(800)
                              .with_height(600),
                          vec![
-       Renderable::View(View::new(Style::new()
-                                  .with_bg(BackgroundColor::Color(RGB::new(255, 255, 255)))
-                                  .with_height(child_height)
-                                  .with_width(child_width)
-                                  .with_left(20)
-                                  .with_position(Position::Fixed), vec![])),
-   ]);
+      Renderable::View(View::new(Style::new()
+                                 .with_bg(BackgroundColor::Color(RGB::new(255, 255, 255)))
+                                 .with_height(child_height)
+                                 .with_width(child_width)
+                                 .with_left(20)
+                                 .with_position(Position::Fixed), vec![])),
+  ]);
 
     let mm = MockMeasure;
     let l = Layout::new(&mm);
@@ -549,13 +549,13 @@ fn it_sets_position_fixed_child_right_600() {
                              .with_width(600)
                              .with_height(800),
                          vec![
-       Renderable::View(View::new(Style::new()
-                                  .with_bg(BackgroundColor::Color(RGB::new(255, 255, 255)))
-                                  .with_height(child_height)
-                                  .with_width(child_width)
-                                  .with_right(20)
-                                  .with_position(Position::Fixed), vec![])),
-   ]);
+      Renderable::View(View::new(Style::new()
+                                 .with_bg(BackgroundColor::Color(RGB::new(255, 255, 255)))
+                                 .with_height(child_height)
+                                 .with_width(child_width)
+                                 .with_right(20)
+                                 .with_position(Position::Fixed), vec![])),
+  ]);
 
     let mm = MockMeasure;
     let l = Layout::new(&mm);
@@ -576,13 +576,13 @@ fn it_sets_position_fixed_child_right_1000() {
                              .with_width(1000)
                              .with_height(800),
                          vec![
-     Renderable::View(View::new(Style::new()
-                                .with_bg(BackgroundColor::Color(RGB::new(255, 255, 255)))
-                                .with_height(child_height)
-                                .with_width(child_width)
-                                .with_right(20)
-                                .with_position(Position::Fixed), vec![])),
- ]);
+    Renderable::View(View::new(Style::new()
+                               .with_bg(BackgroundColor::Color(RGB::new(255, 255, 255)))
+                               .with_height(child_height)
+                               .with_width(child_width)
+                               .with_right(20)
+                               .with_position(Position::Fixed), vec![])),
+]);
 
     let mm = MockMeasure;
     let l = Layout::new(&mm);
@@ -602,10 +602,10 @@ fn it_renders_consecutive_text_elements_column() {
                              .with_height(12)
                              .with_flex_direction(FlexDirection::Column),
                          vec![
-        Renderable::Text(Text::new(Style::new(), "a")),
-        Renderable::Text(Text::new(Style::new(), "b")),
-        Renderable::Text(Text::new(Style::new(), "c")),
-    ]);
+       Renderable::Text(Text::new(Style::new(), "a")),
+       Renderable::Text(Text::new(Style::new(), "b")),
+       Renderable::Text(Text::new(Style::new(), "c")),
+   ]);
 
     let mm = MockMeasure;
     let l = Layout::new(&mm);
@@ -626,10 +626,10 @@ fn it_renders_consecutive_text_elements_row() {
                              .with_height(4)
                              .with_flex_direction(FlexDirection::Row),
                          vec![
-        Renderable::Text(Text::new(Style::new(), "a")),
-        Renderable::Text(Text::new(Style::new(), "b")),
-        Renderable::Text(Text::new(Style::new(), "c")),
-    ]);
+       Renderable::Text(Text::new(Style::new(), "a")),
+       Renderable::Text(Text::new(Style::new(), "b")),
+       Renderable::Text(Text::new(Style::new(), "c")),
+   ]);
 
     let mm = MockMeasure;
     let l = Layout::new(&mm);
@@ -644,29 +644,28 @@ fn it_renders_consecutive_text_elements_row() {
 }
 
 #[test]
-// TODO the column version
 fn it_renders_consecutive_text_elements_three_rows() {
     let root = Root::new(Style::new()
                              .with_width(12)
                              .with_height(4)
                              .with_flex_direction(FlexDirection::Column),
                          vec![
-        Renderable::View(View::new(Style::new(), vec![
-            Renderable::Text(Text::new(Style::new(), "a")),
-            Renderable::Text(Text::new(Style::new(), "b")),
-            Renderable::Text(Text::new(Style::new(), "c")),
-        ])),
-        Renderable::View(View::new(Style::new(), vec![
-            Renderable::Text(Text::new(Style::new(), "d")),
-            Renderable::Text(Text::new(Style::new(), "e")),
-            Renderable::Text(Text::new(Style::new(), "f")),
-        ])),
-        Renderable::View(View::new(Style::new(), vec![
-            Renderable::Text(Text::new(Style::new(), "g")),
-            Renderable::Text(Text::new(Style::new(), "h")),
-            Renderable::Text(Text::new(Style::new(), "i")),
-        ])),
-    ]);
+       Renderable::View(View::new(Style::new(), vec![
+           Renderable::Text(Text::new(Style::new(), "a")),
+           Renderable::Text(Text::new(Style::new(), "b")),
+           Renderable::Text(Text::new(Style::new(), "c")),
+       ])),
+       Renderable::View(View::new(Style::new(), vec![
+           Renderable::Text(Text::new(Style::new(), "d")),
+           Renderable::Text(Text::new(Style::new(), "e")),
+           Renderable::Text(Text::new(Style::new(), "f")),
+       ])),
+       Renderable::View(View::new(Style::new(), vec![
+           Renderable::Text(Text::new(Style::new(), "g")),
+           Renderable::Text(Text::new(Style::new(), "h")),
+           Renderable::Text(Text::new(Style::new(), "i")),
+       ])),
+   ]);
 
     let mm = MockMeasure;
     let l = Layout::new(&mm);
