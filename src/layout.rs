@@ -34,6 +34,22 @@ impl<'m, 'r> Layout<'m> {
             &Renderable::View(ref view) => {
                 cursor.cascade_style(&view.style);
 
+                let mut parent_cursor = cursor;
+                parent_cursor.flex_direction = view.style.flex_direction;
+                let mut children = vec![];
+                for child in &view.children {
+                    parent_cursor.width = 0;
+                    let (ref mut commands, nc) = self.recurse(child, parent_cursor);
+
+                    if parent_cursor.flex_direction == style::FlexDirection::Row {
+                        parent_cursor.x = nc.x;
+                    } else {
+                        parent_cursor.y = nc.y;
+                    }
+
+                    children.append(commands);
+                }
+
                 {
                     let width = view.style.width.unwrap_or(cursor.width);
                     let height = view.style.height.unwrap_or(cursor.height);
@@ -57,23 +73,11 @@ impl<'m, 'r> Layout<'m> {
                     let bg = cursor.compute_bg(view.style.bg);
                     let fg = view.style.fg.unwrap_or(cursor.fg);
                     let command = Command::new(bg, fg, None, rect);
+
                     v.push(command);
                 }
 
-                let mut parent_cursor = cursor;
-                parent_cursor.flex_direction = view.style.flex_direction;
-                for child in &view.children {
-                    parent_cursor.width = 0;
-                    let (ref mut ls, nc) = self.recurse(child, parent_cursor);
-
-                    if parent_cursor.flex_direction == style::FlexDirection::Row {
-                        parent_cursor.x = nc.x;
-                    } else {
-                        parent_cursor.y = nc.y;
-                    }
-
-                    v.append(ls);
-                }
+                v.append(&mut children);
 
                 if view.style.position == style::Position::Static {
                     if cursor.flex_direction == style::FlexDirection::Row {
