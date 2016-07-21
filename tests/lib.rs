@@ -92,9 +92,13 @@ fn it_sets_child_dim_with_no_child_height() {
 #[test]
 fn it_sets_child_dim_with_no_child_width() {
     let child_height = 100u32;
-    let root = Root::new(Style::new().with_width(800).with_height(600),
+    let root = Root::new(Style::new()
+                             .with_width(800)
+                             .with_height(600),
                          vec![
-       Renderable::View(View::new(Style::new().with_height(child_height), vec![])),
+       Renderable::View(View::new(Style::new()
+                                  .with_height(child_height),
+                                  vec![])),
    ]);
 
     let mm = MockMeasure;
@@ -110,10 +114,14 @@ fn it_sets_child_dim_with_no_child_width() {
 fn it_sets_single_child_dim() {
     let child_width = 50u32;
     let child_height = 100u32;
-    let root = Root::new(Style::new().with_width(800).with_height(600),
+    let root = Root::new(Style::new()
+                             .with_width(800)
+                             .with_height(600),
                          vec![
-       Renderable::View(View::new(Style::new().with_height(child_height)
-                                  .with_width(child_width), vec![])),
+       Renderable::View(View::new(Style::new()
+                                  .with_height(child_height)
+                                  .with_width(child_width),
+                                  vec![])),
    ]);
 
     let mm = MockMeasure;
@@ -690,4 +698,24 @@ fn it_renders_consecutive_text_elements_three_rows() {
     assert_eq!(2, i.left());
     assert_eq!(8, i.top());
 }
-// TODO should cut off text that is taller than height (test in browser)
+
+#[test]
+fn it_nested_children_give_parent_width_and_height() {
+    let root = Root::new(Style::new().with_width(3).with_height(4),
+                         vec![Renderable::View(View::new(Style::new(),
+                                                         vec![
+                            Renderable::Text(Text::new(Style::new(), "abc"))
+                        ]))]);
+
+    let mm = MockMeasure;
+    let l = Layout::new(&mm);
+    let layout = l.layout(&root, Offset::new(0, 0));
+    debug_layout(&layout);
+    assert_eq!(3, layout.len());
+    let view = &layout[1];
+    assert_eq!(3, view.width());
+    assert_eq!(4, view.height());
+    let text = &layout[2];
+    assert_eq!(3, text.width());
+    assert_eq!(4, text.height());
+}

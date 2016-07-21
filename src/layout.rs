@@ -43,8 +43,14 @@ impl<'m, 'r> Layout<'m> {
 
                     if parent_cursor.flex_direction == style::FlexDirection::Row {
                         parent_cursor.x = nc.x;
+                        parent_cursor.height = 0;
+                        cursor.width += nc.width;
+                        cursor.height = nc.height;
                     } else {
                         parent_cursor.y = nc.y;
+                        parent_cursor.width = 0;
+                        cursor.width = nc.width;
+                        cursor.height = nc.height;
                     }
 
                     children.append(commands);
@@ -102,6 +108,8 @@ impl<'m, 'r> Layout<'m> {
                 }
                 cursor.x += width;
                 cursor.y += height;
+                cursor.width = width;
+                cursor.height = height;
             }
         }
 
