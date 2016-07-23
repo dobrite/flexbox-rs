@@ -29,7 +29,7 @@ impl<'m, 'r> Layout<'m> {
     fn recurse(&'r self, r: &Renderable<'r>, mut cursor: Cursor) -> (Vec<Command>, Cursor) {
         let mut v = vec![];
 
-        match r {
+        let (command, mut children) = match r {
             // TODO can we destructure view and children here?
             &Renderable::View(ref view) => {
                 cursor.cascade_style(&view.style);
@@ -55,10 +55,18 @@ impl<'m, 'r> Layout<'m> {
                     children.append(commands);
                 }
 
-                {
+                // now that children are laid out; we know parent's dimensions and can push it on
+                let command = {
+                    // if parent has declared dimensions, use them, otherwise use the dimensions
+                    // forced by children
                     let width = view.style.width.unwrap_or(cursor.width);
                     let height = view.style.height.unwrap_or(cursor.height);
+
                     let (x, y) = if view.style.position == style::Position::Fixed {
+                        // fixed position is relative to the whole screen rather than parent.
+                        // since fixed can be declared anywhere along the tree we have to
+                        // continually check and deal with it.
+
                         // TODO When both top and bottom are specified, as long as height is
                         // unspecified, auto or 100%, both top and bottom distances will be
                         // respected. Otherwise, if height is constrained in any way, the top
@@ -72,17 +80,15 @@ impl<'m, 'r> Layout<'m> {
                                     |bottom| cursor.root_height as i32 - bottom - height as i32));
                         (x, y)
                     } else {
+                        // offset is how far scrolled the parent is
                         (cursor.x as i32 + cursor.offset_x, cursor.y as i32 + cursor.offset_y)
                     };
+
                     let rect = Rect::new(x, y, width, height);
                     let bg = cursor.compute_bg(view.style.bg);
                     let fg = view.style.fg.unwrap_or(cursor.fg);
-                    let command = Command::new(bg, fg, None, rect);
-
-                    v.push(command);
-                }
-
-                v.append(&mut children);
+                    Command::new(bg, fg, None, rect)
+                };
 
                 if view.style.position == style::Position::Static {
                     if cursor.flex_direction == style::FlexDirection::Row {
@@ -91,26 +97,33 @@ impl<'m, 'r> Layout<'m> {
                         cursor.y += view.style.height.unwrap_or(cursor.height);
                     }
                 }
+
+                (command, children)
             }
             // TODO can we destructure view and children here?
             &Renderable::Text(ref text) => {
                 cursor.cascade_style(&text.style);
                 let measure::Dim { width, height } = self.measure.get_dim(text.children);
-                {
+
+                let command = {
                     let x = cursor.x as i32;
                     let y = cursor.y as i32;
                     let rect = Rect::new(x, y, width, height);
                     let bg = cursor.compute_bg(text.style.bg);
                     let fg = text.style.fg.unwrap_or(cursor.fg);
-                    let command = Command::new(bg, fg, Some(text.children), rect);
-                    v.push(command);
-                }
+                    Command::new(bg, fg, Some(text.children), rect)
+                };
+
                 cursor.x += width;
                 cursor.y += height;
                 cursor.width = width;
                 cursor.height = height;
+                (command, vec![])
             }
-        }
+        };
+
+        v.push(command);
+        v.append(&mut children);
 
         (v, cursor)
     }
