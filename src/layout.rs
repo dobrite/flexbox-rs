@@ -29,11 +29,11 @@ impl<'m, 'r> Layout<'m> {
     fn recurse(&'r self, r: &Renderable<'r>, mut cursor: Cursor) -> (Vec<Command>, Cursor) {
         let mut v = vec![];
 
+        cursor.cascade_style(&r.get_style());
+
         let (command, mut children) = match r {
             // TODO can we destructure view and children here?
             &Renderable::View(ref view) => {
-                cursor.cascade_style(&view.style);
-
                 let mut parent_cursor = cursor;
                 parent_cursor.flex_direction = view.style.flex_direction;
                 let mut children = vec![];
@@ -102,7 +102,6 @@ impl<'m, 'r> Layout<'m> {
             }
             // TODO can we destructure view and children here?
             &Renderable::Text(ref text) => {
-                cursor.cascade_style(&text.style);
                 let measure::Dim { width, height } = self.measure.get_dim(text.children);
 
                 let command = {
