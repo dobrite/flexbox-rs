@@ -50,7 +50,6 @@ impl<'m, 'r> Layout<'m> {
                         parent_cursor.y = nc.y;
                         parent_cursor.width = 0;
                         cursor.width = nc.width;
-                        cursor.height = nc.height;
                     }
 
                     children.append(commands);

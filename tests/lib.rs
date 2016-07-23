@@ -700,7 +700,7 @@ fn it_renders_consecutive_text_elements_three_rows() {
 }
 
 #[test]
-fn it_nested_children_give_parent_width_and_height() {
+fn it_nested_children_give_parent_width_and_height_horizontal() {
     let root = Root::new(Style::new().with_width(3).with_height(4),
                          vec![Renderable::View(View::new(Style::new(),
                                                          vec![
@@ -710,7 +710,6 @@ fn it_nested_children_give_parent_width_and_height() {
     let mm = MockMeasure;
     let l = Layout::new(&mm);
     let layout = l.layout(&root, Offset::new(0, 0));
-    debug_layout(&layout);
     assert_eq!(3, layout.len());
     let view = &layout[1];
     assert_eq!(3, view.width());
@@ -719,3 +718,97 @@ fn it_nested_children_give_parent_width_and_height() {
     assert_eq!(3, text.width());
     assert_eq!(4, text.height());
 }
+
+#[test]
+fn it_nested_children_give_parent_width_and_height_vertical() {
+    let root = Root::new(Style::new().with_width(3).with_height(12),
+                         vec![Renderable::View(View::new(Style::new()
+                                                         .with_flex_direction(FlexDirection::Column),
+                                                         vec![
+                            Renderable::Text(Text::new(Style::new(), "a")),
+                            Renderable::Text(Text::new(Style::new(), "b")),
+                            Renderable::Text(Text::new(Style::new(), "c")),
+                        ]))]);
+
+    let mm = MockMeasure;
+    let l = Layout::new(&mm);
+    let layout = l.layout(&root, Offset::new(0, 0));
+    debug_layout(&layout);
+    assert_eq!(5, layout.len());
+    let root = &layout[0];
+    assert_eq!(3, root.width());
+    assert_eq!(12, root.height());
+    let view = &layout[1];
+    assert_eq!(1, view.width());
+    assert_eq!(12, view.height());
+    let text = &layout[2];
+    assert_eq!(1, text.width());
+    assert_eq!(4, text.height());
+    let text = &layout[3];
+    assert_eq!(1, text.width());
+    assert_eq!(4, text.height());
+    let text = &layout[4];
+    assert_eq!(1, text.width());
+    assert_eq!(4, text.height());
+}
+
+#[test]
+fn it_renders_consecutive_text_elements_three_columns() {
+    let root = Root::new(Style::new()
+                             .with_width(3)
+                             .with_height(12)
+                             .with_flex_direction(FlexDirection::Row),
+                         vec![
+      Renderable::View(View::new(Style::new()
+                                 .with_flex_direction(FlexDirection::Column), vec![
+          Renderable::Text(Text::new(Style::new(), "a")),
+          Renderable::Text(Text::new(Style::new(), "b")),
+          Renderable::Text(Text::new(Style::new(), "c")),
+      ])),
+      Renderable::View(View::new(Style::new()
+                                 .with_flex_direction(FlexDirection::Column), vec![
+          Renderable::Text(Text::new(Style::new(), "d")),
+          Renderable::Text(Text::new(Style::new(), "e")),
+          Renderable::Text(Text::new(Style::new(), "f")),
+      ])),
+      Renderable::View(View::new(Style::new()
+                                 .with_flex_direction(FlexDirection::Column), vec![
+          Renderable::Text(Text::new(Style::new(), "g")),
+          Renderable::Text(Text::new(Style::new(), "h")),
+          Renderable::Text(Text::new(Style::new(), "i")),
+      ])),
+    ]);
+
+    let mm = MockMeasure;
+    let l = Layout::new(&mm);
+    let layout = l.layout(&root, Offset::new(0, 0));
+    assert_eq!(13, layout.len());
+    let d = &layout[2];
+    assert_eq!(0, d.left());
+    assert_eq!(0, d.top());
+    let e = &layout[3];
+    assert_eq!(0, e.left());
+    assert_eq!(4, e.top());
+    let f = &layout[4];
+    assert_eq!(0, f.left());
+    assert_eq!(8, f.top());
+    let d = &layout[6];
+    assert_eq!(1, d.left());
+    assert_eq!(0, d.top());
+    let e = &layout[7];
+    assert_eq!(1, e.left());
+    assert_eq!(4, e.top());
+    let f = &layout[8];
+    assert_eq!(1, f.left());
+    assert_eq!(8, f.top());
+    let g = &layout[10];
+    assert_eq!(2, g.left());
+    assert_eq!(0, g.top());
+    let h = &layout[11];
+    assert_eq!(2, h.left());
+    assert_eq!(4, h.top());
+    let i = &layout[12];
+    assert_eq!(2, i.left());
+    assert_eq!(8, i.top());
+}
+// TODO: should cut off text that is taller than height (test in browser)
