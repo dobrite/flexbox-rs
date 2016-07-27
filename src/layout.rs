@@ -80,8 +80,7 @@ impl<'m, 'r> Layout<'m> {
                             .map_or(0, |right| cursor.root_width as i32 - right - width as i32));
                         let y = view.style.top.unwrap_or(view.style
                             .bottom
-                            .map_or(0,
-                                    |bottom| cursor.root_height as i32 - bottom - height as i32));
+                            .map_or(0, |bot| cursor.root_height as i32 - bot - height as i32));
                         (x, y)
                     } else {
                         // offset is how far scrolled the parent is
