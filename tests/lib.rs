@@ -733,7 +733,6 @@ fn it_nested_children_give_parent_width_and_height_vertical() {
     let mm = MockMeasure;
     let l = Layout::new(&mm);
     let layout = l.layout(&root, Offset::new(0, 0));
-    debug_layout(&layout);
     assert_eq!(5, layout.len());
     let root = &layout[0];
     assert_eq!(3, root.width());
@@ -741,6 +740,38 @@ fn it_nested_children_give_parent_width_and_height_vertical() {
     let view = &layout[1];
     assert_eq!(1, view.width());
     assert_eq!(12, view.height());
+    let text = &layout[2];
+    assert_eq!(1, text.width());
+    assert_eq!(4, text.height());
+    let text = &layout[3];
+    assert_eq!(1, text.width());
+    assert_eq!(4, text.height());
+    let text = &layout[4];
+    assert_eq!(1, text.width());
+    assert_eq!(4, text.height());
+}
+
+#[test]
+fn it_nested_children_give_parent_width_and_height_vertical_extra_height() {
+    let root = Root::new(Style::new().with_width(3).with_height(24),
+                         vec![Renderable::View(View::new(Style::new()
+                                                         .with_flex_direction(FlexDirection::Column),
+                                                         vec![
+                            Renderable::Text(Text::new(Style::new(), "a")),
+                            Renderable::Text(Text::new(Style::new(), "b")),
+                            Renderable::Text(Text::new(Style::new(), "c")),
+                        ]))]);
+
+    let mm = MockMeasure;
+    let l = Layout::new(&mm);
+    let layout = l.layout(&root, Offset::new(0, 0));
+    assert_eq!(5, layout.len());
+    let root = &layout[0];
+    assert_eq!(3, root.width());
+    assert_eq!(24, root.height());
+    let view = &layout[1];
+    assert_eq!(1, view.width());
+    assert_eq!(24, view.height());
     let text = &layout[2];
     assert_eq!(1, text.width());
     assert_eq!(4, text.height());
