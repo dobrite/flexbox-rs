@@ -121,6 +121,7 @@ impl<'m, 'r> Layout<'m> {
                 cursor.y += height;
                 cursor.width = width;
                 cursor.height = height;
+
                 (command, vec![])
             }
         };

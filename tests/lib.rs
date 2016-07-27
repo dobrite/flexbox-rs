@@ -621,10 +621,13 @@ fn it_renders_consecutive_text_elements_column() {
     assert_eq!(4, layout.len());
     let a = &layout[1];
     assert_eq!(0, a.top());
+    assert_eq!(0, a.left());
     let b = &layout[2];
     assert_eq!(4, b.top());
+    assert_eq!(0, b.left());
     let c = &layout[3];
     assert_eq!(8, c.top());
+    assert_eq!(0, c.left());
 }
 
 #[test]
