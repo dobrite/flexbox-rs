@@ -36,11 +36,15 @@ impl<'m, 'r> Layout<'m> {
             &Renderable::View(ref view) => {
                 let mut parent_cursor = cursor;
                 parent_cursor.flex_direction = view.style.flex_direction;
+                parent_cursor.width = 0;
                 let mut children = vec![];
                 for child in &view.children {
-                    parent_cursor.width = 0;
                     let (ref mut commands, nc) = self.recurse(child, parent_cursor);
 
+                    // move parent_cursor to get ready to render the next child
+                    //
+                    // adjust cursor width/height as we  render children so that
+                    // it has dimensions needed to enclose the children
                     if parent_cursor.flex_direction == style::FlexDirection::Row {
                         parent_cursor.x = nc.x;
                         parent_cursor.height = 0;
