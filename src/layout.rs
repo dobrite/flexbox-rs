@@ -34,25 +34,25 @@ impl<'m, 'r> Layout<'m> {
         let (command, mut children) = match r {
             // TODO can we destructure view and children here?
             &Renderable::View(ref view) => {
-                let mut parent_cursor = cursor;
-                parent_cursor.flex_direction = view.style.flex_direction;
-                parent_cursor.width = 0;
+                let mut child_cursor = cursor;
+                child_cursor.flex_direction = view.style.flex_direction;
+                child_cursor.width = 0;
                 let mut children = vec![];
                 for child in &view.children {
-                    let (ref mut commands, nc) = self.recurse(child, parent_cursor);
+                    let (ref mut commands, nc) = self.recurse(child, child_cursor);
 
-                    // move parent_cursor to get ready to render the next child
+                    // move child_cursor to get ready to render the next child
                     //
                     // adjust cursor width/height as we  render children so that
                     // it has dimensions needed to enclose the children
-                    if parent_cursor.flex_direction == style::FlexDirection::Row {
-                        parent_cursor.x = nc.x;
-                        parent_cursor.height = 0;
+                    if child_cursor.flex_direction == style::FlexDirection::Row {
+                        child_cursor.x = nc.x;
+                        child_cursor.height = 0;
                         cursor.width += nc.width;
                         cursor.height = nc.height;
                     } else {
-                        parent_cursor.y = nc.y;
-                        parent_cursor.width = 0;
+                        child_cursor.y = nc.y;
+                        child_cursor.width = 0;
                         cursor.width = nc.width;
                     }
 
