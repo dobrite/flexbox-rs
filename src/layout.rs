@@ -41,18 +41,19 @@ impl<'m, 'r> Layout<'m> {
                 for child in &view.children {
                     let (ref mut commands, nc) = self.recurse(child, child_cursor);
 
+                    child_cursor.height = 0;
+                    child_cursor.width = 0;
+
                     // move child_cursor to get ready to render the next child
                     //
                     // adjust cursor width/height as we  render children so that
                     // it has dimensions needed to enclose the children
                     if child_cursor.flex_direction == style::FlexDirection::Row {
                         child_cursor.x += nc.width;
-                        child_cursor.height = 0;
                         cursor.width += nc.width;
                         cursor.height = nc.height;
                     } else {
                         child_cursor.y += nc.height;
-                        child_cursor.width = 0;
                         cursor.width = nc.width;
                     }
 
