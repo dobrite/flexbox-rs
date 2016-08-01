@@ -46,12 +46,12 @@ impl<'m, 'r> Layout<'m> {
                     // adjust cursor width/height as we  render children so that
                     // it has dimensions needed to enclose the children
                     if child_cursor.flex_direction == style::FlexDirection::Row {
-                        child_cursor.x = nc.x;
+                        child_cursor.x += nc.width;
                         child_cursor.height = 0;
                         cursor.width += nc.width;
                         cursor.height = nc.height;
                     } else {
-                        child_cursor.y = nc.y;
+                        child_cursor.y += nc.height;
                         child_cursor.width = 0;
                         cursor.width = nc.width;
                     }
@@ -95,9 +95,9 @@ impl<'m, 'r> Layout<'m> {
 
                 if view.style.position == style::Position::Static {
                     if cursor.flex_direction == style::FlexDirection::Row {
-                        cursor.x += view.style.width.unwrap_or(cursor.width);
+                        cursor.width = view.style.width.unwrap_or(cursor.width);
                     } else {
-                        cursor.y += view.style.height.unwrap_or(cursor.height);
+                        cursor.height = view.style.height.unwrap_or(cursor.height);
                     }
                 }
 
@@ -116,8 +116,6 @@ impl<'m, 'r> Layout<'m> {
                     Command::new(bg, fg, Some(text.children), rect)
                 };
 
-                cursor.x += width;
-                cursor.y += height;
                 cursor.width = width;
                 cursor.height = height;
 
